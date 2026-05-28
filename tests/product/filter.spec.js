@@ -3,11 +3,11 @@ import { expect, test } from '@playwright/test';
 
 test.describe('Product Filter Tests', () => {
 
-    let page;
+   let productPage;
 
     test.beforeEach(async ({ page }) => {
 
-        const page = new page(page);
+        const productPage = new ProductPage(page);
 
         await page.goto('https://demo.nopcommerce.com/desktops');
     });

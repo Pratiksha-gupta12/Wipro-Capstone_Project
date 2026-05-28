@@ -4,7 +4,7 @@ test.describe('Product Search Tests', () => {
 
     test('TC_PRODUCT_001 - Search Existing Product', async ({ page }) => {
 
-        const page = new page(page);
+        const productPage = new productPage(page);
 
         await page.goto('https://demo.nopcommerce.com/');
 
@@ -14,7 +14,7 @@ test.describe('Product Search Tests', () => {
     });
 test('TC_PRODUCT_002 - Search Non Existing Product', async ({ page }) => {
 
-    const page = new page(page);
+     const productPage = new productPage(page);
 
     await page.goto('https://demo.nopcommerce.com/');
 

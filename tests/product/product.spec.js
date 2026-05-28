@@ -278,7 +278,7 @@ test.beforeEach(async ({ page }) => {
         }
     },
 
-    async ({ page, page }) => {
+    async ({ page }) => {
 
         await page.goto(
 'https://demo.nopcommerce.com/desktops'
