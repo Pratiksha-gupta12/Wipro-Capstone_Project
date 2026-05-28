@@ -1,3 +1,6 @@
+const { test, expect } =
+require('@playwright/test');
+
 test('19. Logout Without Active Session',
 async ({ page }) => {
 
