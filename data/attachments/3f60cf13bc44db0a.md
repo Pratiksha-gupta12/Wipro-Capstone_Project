@@ -1,0 +1,494 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: product/sorting.spec.js >> Product Sorting Tests >> TC_PRODUCT_014 - Sort Products By Name Z-A
+- Location: tests/product/sorting.spec.js:31:9
+
+# Error details
+
+```
+TypeError: page.sortProduct is not a function
+```
+
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - status
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - link "Skip navigation" [ref=e4] [cursor=pointer]:
+        - /url: "#main"
+      - generic [ref=e5]:
+        - combobox "Currency selector" [ref=e8]:
+          - option "US Dollar" [selected]
+          - option "Euro"
+        - list [ref=e11]:
+          - listitem [ref=e12]:
+            - link "Register" [ref=e13] [cursor=pointer]:
+              - /url: /register?returnUrl=%2Fdesktops
+          - listitem [ref=e14]:
+            - link "Log in" [ref=e15] [cursor=pointer]:
+              - /url: /login?returnUrl=%2Fdesktops
+          - listitem [ref=e16]:
+            - link "Wishlist (0)" [ref=e17] [cursor=pointer]:
+              - /url: /wishlist
+              - generic [ref=e18]: Wishlist
+              - generic [ref=e19]: (0)
+          - listitem [ref=e20]:
+            - link "Shopping cart (0)" [ref=e21] [cursor=pointer]:
+              - /url: /cart
+              - generic [ref=e22]: Shopping cart
+              - generic [ref=e23]: (0)
+      - generic [ref=e24]:
+        - link "nopCommerce demo store" [ref=e26] [cursor=pointer]:
+          - /url: /
+          - img "nopCommerce demo store" [ref=e27]
+        - search [ref=e28]:
+          - generic [ref=e29]:
+            - textbox "Search store" [ref=e30]
+            - button "Search" [ref=e31] [cursor=pointer]
+    - navigation [ref=e33]:
+      - menu "Categories" [ref=e34]:
+        - menuitem "Computers" [ref=e35]:
+          - button "Computers" [ref=e37] [cursor=pointer]
+        - menuitem "Electronics" [ref=e38]:
+          - button "Electronics" [ref=e40] [cursor=pointer]
+        - menuitem "Apparel" [ref=e41]:
+          - button "Apparel" [ref=e43] [cursor=pointer]
+        - menuitem "Digital downloads" [ref=e44]:
+          - button "Digital downloads" [ref=e45] [cursor=pointer]
+        - menuitem "Books" [ref=e46]:
+          - button "Books" [ref=e47] [cursor=pointer]
+        - menuitem "Jewelry" [ref=e48]:
+          - button "Jewelry" [ref=e49] [cursor=pointer]
+        - menuitem "Gift Cards" [ref=e50]:
+          - button "Gift Cards" [ref=e51] [cursor=pointer]
+    - main [ref=e52]:
+      - generic [ref=e53]:
+        - list [ref=e55]:
+          - listitem [ref=e56]:
+            - link "Home" [ref=e57] [cursor=pointer]:
+              - /url: /
+            - generic [ref=e58]: /
+          - listitem [ref=e59]:
+            - link "Computers" [ref=e60] [cursor=pointer]:
+              - /url: /computers
+              - generic [ref=e61]: Computers
+            - generic [ref=e62]: /
+          - listitem [ref=e63]:
+            - strong [ref=e64]: Desktops
+        - complementary [ref=e65]:
+          - generic [ref=e66]:
+            - heading "Categories" [level=2] [ref=e67]
+            - list [ref=e69]:
+              - listitem [ref=e70]:
+                - link "Computers" [ref=e71] [cursor=pointer]:
+                  - /url: /computers
+                - list [ref=e72]:
+                  - listitem [ref=e73]:
+                    - link "Desktops" [ref=e74] [cursor=pointer]:
+                      - /url: /desktops
+                  - listitem [ref=e75]:
+                    - link "Notebooks" [ref=e76] [cursor=pointer]:
+                      - /url: /notebooks
+                  - listitem [ref=e77]:
+                    - link "Software" [ref=e78] [cursor=pointer]:
+                      - /url: /software
+              - listitem [ref=e79]:
+                - link "Electronics" [ref=e80] [cursor=pointer]:
+                  - /url: /electronics
+              - listitem [ref=e81]:
+                - link "Apparel" [ref=e82] [cursor=pointer]:
+                  - /url: /apparel
+              - listitem [ref=e83]:
+                - link "Digital downloads" [ref=e84] [cursor=pointer]:
+                  - /url: /digital-downloads
+              - listitem [ref=e85]:
+                - link "Books" [ref=e86] [cursor=pointer]:
+                  - /url: /books
+              - listitem [ref=e87]:
+                - link "Jewelry" [ref=e88] [cursor=pointer]:
+                  - /url: /jewelry
+              - listitem [ref=e89]:
+                - link "Gift Cards" [ref=e90] [cursor=pointer]:
+                  - /url: /gift-cards
+          - generic [ref=e91]:
+            - heading "Manufacturers" [level=2] [ref=e92]
+            - generic [ref=e93]:
+              - list [ref=e94]:
+                - listitem [ref=e95]:
+                  - link "Apple" [ref=e96] [cursor=pointer]:
+                    - /url: /apple
+                - listitem [ref=e97]:
+                  - link "HP" [ref=e98] [cursor=pointer]:
+                    - /url: /hp
+              - link "View all" [ref=e100] [cursor=pointer]:
+                - /url: /manufacturer/all
+          - generic [ref=e101]:
+            - heading "Popular tags" [level=2] [ref=e102]
+            - generic [ref=e103]:
+              - list [ref=e105]:
+                - listitem [ref=e106]:
+                  - link "apparel" [ref=e107] [cursor=pointer]:
+                    - /url: /apparel-2
+                - listitem [ref=e108]:
+                  - link "awesome" [ref=e109] [cursor=pointer]:
+                    - /url: /awesome
+                - listitem [ref=e110]:
+                  - link "book" [ref=e111] [cursor=pointer]:
+                    - /url: /book
+                - listitem [ref=e112]:
+                  - link "camera" [ref=e113] [cursor=pointer]:
+                    - /url: /camera
+                - listitem [ref=e114]:
+                  - link "cell" [ref=e115] [cursor=pointer]:
+                    - /url: /cell
+                - listitem [ref=e116]:
+                  - link "compact" [ref=e117] [cursor=pointer]:
+                    - /url: /compact
+                - listitem [ref=e118]:
+                  - link "computer" [ref=e119] [cursor=pointer]:
+                    - /url: /computer
+                - listitem [ref=e120]:
+                  - link "cool" [ref=e121] [cursor=pointer]:
+                    - /url: /cool
+                - listitem [ref=e122]:
+                  - link "digital" [ref=e123] [cursor=pointer]:
+                    - /url: /digital
+                - listitem [ref=e124]:
+                  - link "game" [ref=e125] [cursor=pointer]:
+                    - /url: /game
+                - listitem [ref=e126]:
+                  - link "jeans" [ref=e127] [cursor=pointer]:
+                    - /url: /jeans
+                - listitem [ref=e128]:
+                  - link "jewelry" [ref=e129] [cursor=pointer]:
+                    - /url: /jewelry-2
+                - listitem [ref=e130]:
+                  - link "nice" [ref=e131] [cursor=pointer]:
+                    - /url: /nice
+                - listitem [ref=e132]:
+                  - link "shirt" [ref=e133] [cursor=pointer]:
+                    - /url: /shirt
+                - listitem [ref=e134]:
+                  - link "shoes" [ref=e135] [cursor=pointer]:
+                    - /url: /shoes-2
+              - link "View all" [ref=e137] [cursor=pointer]:
+                - /url: /producttag/all
+        - generic [ref=e139]:
+          - heading "Desktops" [level=1] [ref=e141]
+          - generic [ref=e142]:
+            - generic [ref=e143]:
+              - generic [ref=e144]:
+                - button "Grid" [ref=e145] [cursor=pointer]
+                - button "List" [ref=e146] [cursor=pointer]
+              - generic [ref=e147]:
+                - text: Sort by
+                - combobox "Select product sort order" [ref=e148]:
+                  - option "Position" [selected]
+                  - 'option "Name: A to Z"'
+                  - 'option "Name: Z to A"'
+                  - 'option "Price: Low to High"'
+                  - 'option "Price: High to Low"'
+                  - option "Created on"
+              - generic [ref=e149]:
+                - text: Display
+                - combobox "Select number of products per page" [ref=e150]:
+                  - option "3"
+                  - option "6" [selected]
+                  - option "9"
+                - text: per page
+            - generic [ref=e154]:
+              - article [ref=e156]:
+                - link "Picture of Build your own computer" [ref=e158] [cursor=pointer]:
+                  - /url: /build-your-own-computer
+                  - img "Picture of Build your own computer" [ref=e159]
+                - generic [ref=e160]:
+                  - heading "Build your own computer" [level=2] [ref=e161]:
+                    - link "Build your own computer" [ref=e162] [cursor=pointer]:
+                      - /url: /build-your-own-computer
+                  - generic "1 review(s)" [ref=e163]
+                  - generic [ref=e166]:
+                    - generic [ref=e167]: $1,200.00
+                    - generic [ref=e168]:
+                      - button "Add to cart" [ref=e169] [cursor=pointer]
+                      - button "Add to compare list" [ref=e170] [cursor=pointer]
+                      - button "Add to wishlist" [ref=e171] [cursor=pointer]
+              - article [ref=e173]:
+                - link "Picture of Digital Storm VANQUISH Custom Performance PC" [ref=e175] [cursor=pointer]:
+                  - /url: /digital-storm-vanquish-custom-performance-pc
+                  - img "Picture of Digital Storm VANQUISH Custom Performance PC" [ref=e176]
+                - generic [ref=e177]:
+                  - heading "Digital Storm VANQUISH Custom Performance PC" [level=2] [ref=e178]:
+                    - link "Digital Storm VANQUISH Custom Performance PC" [ref=e179] [cursor=pointer]:
+                      - /url: /digital-storm-vanquish-custom-performance-pc
+                  - generic "1 review(s)" [ref=e180]
+                  - generic [ref=e183]:
+                    - generic [ref=e184]: $1,259.00
+                    - generic [ref=e185]:
+                      - button "Add to cart" [ref=e186] [cursor=pointer]
+                      - button "Add to compare list" [ref=e187] [cursor=pointer]
+                      - button "Add to wishlist" [ref=e188] [cursor=pointer]
+              - article [ref=e190]:
+                - link "Picture of Lenovo IdeaCentre" [ref=e192] [cursor=pointer]:
+                  - /url: /lenovo-ideacentre
+                  - img "Picture of Lenovo IdeaCentre" [ref=e193]
+                - generic [ref=e194]:
+                  - heading "Lenovo IdeaCentre" [level=2] [ref=e195]:
+                    - link "Lenovo IdeaCentre" [ref=e196] [cursor=pointer]:
+                      - /url: /lenovo-ideacentre
+                  - generic "1 review(s)" [ref=e197]
+                  - generic [ref=e200]:
+                    - generic [ref=e201]: $500.00
+                    - generic [ref=e202]:
+                      - button "Add to cart" [ref=e203] [cursor=pointer]
+                      - button "Add to compare list" [ref=e204] [cursor=pointer]
+                      - button "Add to wishlist" [ref=e205] [cursor=pointer]
+    - contentinfo [ref=e206]:
+      - generic [ref=e207]:
+        - navigation [ref=e208]:
+          - heading "Information" [level=2] [ref=e209]
+          - menu "Information" [ref=e210]:
+            - menuitem "Sitemap" [ref=e211]:
+              - link "Sitemap" [ref=e212] [cursor=pointer]:
+                - /url: /sitemap
+            - menuitem "Shipping & returns" [ref=e213]:
+              - link "Shipping & returns" [ref=e214] [cursor=pointer]:
+                - /url: /shipping-returns
+            - menuitem "Privacy notice" [ref=e215]:
+              - link "Privacy notice" [ref=e216] [cursor=pointer]:
+                - /url: /privacy-notice
+            - menuitem "Conditions of Use" [ref=e217]:
+              - link "Conditions of Use" [ref=e218] [cursor=pointer]:
+                - /url: /conditions-of-use
+            - menuitem "About us" [ref=e219]:
+              - link "About us" [ref=e220] [cursor=pointer]:
+                - /url: /about-us
+            - menuitem "Contact us" [ref=e221]:
+              - link "Contact us" [ref=e222] [cursor=pointer]:
+                - /url: /contactus
+          - heading "Customer service" [level=2] [ref=e223]
+          - menu "Customer service" [ref=e224]:
+            - menuitem "Search" [ref=e225]:
+              - link "Search" [ref=e226] [cursor=pointer]:
+                - /url: /search
+            - menuitem "News" [ref=e227]:
+              - link "News" [ref=e228] [cursor=pointer]:
+                - /url: /news
+            - menuitem "Blog" [ref=e229]:
+              - link "Blog" [ref=e230] [cursor=pointer]:
+                - /url: /blog
+            - menuitem "Recently viewed products" [ref=e231]:
+              - link "Recently viewed products" [ref=e232] [cursor=pointer]:
+                - /url: /recentlyviewedproducts
+            - menuitem "Compare products list" [ref=e233]:
+              - link "Compare products list" [ref=e234] [cursor=pointer]:
+                - /url: /compareproducts
+            - menuitem "New products" [ref=e235]:
+              - link "New products" [ref=e236] [cursor=pointer]:
+                - /url: /newproducts
+          - heading "My account" [level=2] [ref=e237]
+          - menu "My account" [ref=e238]:
+            - menuitem "My account" [ref=e239]:
+              - link "My account" [ref=e240] [cursor=pointer]:
+                - /url: /customer/info
+            - menuitem "Orders" [ref=e241]:
+              - link "Orders" [ref=e242] [cursor=pointer]:
+                - /url: /order/history
+            - menuitem "Addresses" [ref=e243]:
+              - link "Addresses" [ref=e244] [cursor=pointer]:
+                - /url: /customer/addresses
+            - menuitem "Shopping cart" [ref=e245]:
+              - link "Shopping cart" [ref=e246] [cursor=pointer]:
+                - /url: /cart
+            - menuitem "Wishlist" [ref=e247]:
+              - link "Wishlist" [ref=e248] [cursor=pointer]:
+                - /url: /wishlist
+            - menuitem "Apply for vendor account" [ref=e249]:
+              - link "Apply for vendor account" [ref=e250] [cursor=pointer]:
+                - /url: /vendor/apply
+        - generic [ref=e251]:
+          - generic [ref=e252]:
+            - heading "Follow us" [level=2] [ref=e253]
+            - list [ref=e254]:
+              - listitem [ref=e255]:
+                - link "Facebook" [ref=e256] [cursor=pointer]:
+                  - /url: https://www.facebook.com/nopCommerce
+              - listitem [ref=e257]:
+                - link "Twitter" [ref=e258] [cursor=pointer]:
+                  - /url: https://twitter.com/nopCommerce
+              - listitem [ref=e259]:
+                - link "RSS" [ref=e260] [cursor=pointer]:
+                  - /url: /news/rss/1
+              - listitem [ref=e261]:
+                - link "YouTube" [ref=e262] [cursor=pointer]:
+                  - /url: https://www.youtube.com/user/nopCommerce
+              - listitem [ref=e263]:
+                - link "Instagram" [ref=e264] [cursor=pointer]:
+                  - /url: https://www.instagram.com/nopcommerce_official
+          - form [ref=e265]:
+            - heading "Newsletter" [level=2] [ref=e266]
+            - generic [ref=e268]:
+              - textbox "Sign up for our newsletter" [ref=e269]:
+                - /placeholder: Enter your email here...
+              - button "Subscribe" [ref=e270] [cursor=pointer]
+      - generic [ref=e271]:
+        - generic [ref=e272]: Copyright © 2026 nopCommerce demo store. All rights reserved.
+        - generic [ref=e273]:
+          - text: Powered by
+          - link "nopCommerce" [ref=e274] [cursor=pointer]:
+            - /url: https://www.nopcommerce.com/
+```
+
+# Test source
+
+```ts
+  1   | import { expect, test } from '@playwright/test';
+  2   | 
+  3   | test.describe('Product Sorting Tests', () => {
+  4   | const { ProductPage } = require('../../pages/ProductPage');
+  5   | 
+  6   | let productPage;
+  7   | 
+  8   | test.beforeEach(async ({ page }) => {
+  9   | 
+  10  |     productPage = new ProductPage(page);
+  11  | 
+  12  |     await page.goto('https://demo.nopcommerce.com/desktops');
+  13  | });
+  14  |     test(
+  15  |         'TC_PRODUCT_013 - Sort Products By Name A-Z',
+  16  |         {
+  17  |             annotation: {
+  18  |                 type: 'Sorting',
+  19  |                 description: 'Verify products can be sorted from A to Z'
+  20  |             }
+  21  |         },
+  22  |         async ({ page }) => {
+  23  | 
+  24  |             await productPage.sortProduct('Name: A to Z');
+  25  | 
+  26  |             await expect(page.locator('#products-orderby'))
+  27  |                 .toHaveValue('5');
+  28  |         }
+  29  |     );
+  30  | 
+  31  |     test(
+  32  |         'TC_PRODUCT_014 - Sort Products By Name Z-A',
+  33  |         {
+  34  |             annotation: {
+  35  |                 type: 'Sorting',
+  36  |                 description: 'Verify products can be sorted from Z to A'
+  37  |             }
+  38  |         },
+  39  |         async ({ page }) => {
+  40  | 
+> 41  |             await page.sortProduct('Name: Z to A');
+      |                        ^ TypeError: page.sortProduct is not a function
+  42  | 
+  43  |             await expect(page.locator('#products-orderby'))
+  44  |                 .toHaveValue('6');
+  45  |         }
+  46  |     );
+  47  | 
+  48  |     test(
+  49  |         'TC_PRODUCT_015 - Sort Products By Price Low To High',
+  50  |         {
+  51  |             annotation: {
+  52  |                 type: 'Sorting',
+  53  |                 description: 'Verify products can be sorted by low to high price'
+  54  |             }
+  55  |         },
+  56  |         async ({ page }) => {
+  57  | 
+  58  |             await productPage.sortProduct('Price: Low to High');
+  59  | 
+  60  |             await expect(page.locator('#products-orderby'))
+  61  |                 .toHaveValue('10');
+  62  |         }
+  63  |     );
+  64  | 
+  65  |     test(
+  66  |         'TC_PRODUCT_016 - Sort Products By Price High To Low',
+  67  |         {
+  68  |             annotation: {
+  69  |                 type: 'Sorting',
+  70  |                 description: 'Verify products can be sorted by high to low price'
+  71  |             }
+  72  |         },
+  73  |         async ({ page }) => {
+  74  | 
+  75  |             await page.sortProduct('Price: High to Low');
+  76  | 
+  77  |             await expect(page.locator('#products-orderby'))
+  78  |                 .toHaveValue('11');
+  79  |         }
+  80  |     );
+  81  | 
+  82  |     test(
+  83  |     'TC_PRODUCT_017 - Verify Selected Sorting Option Remains Active',
+  84  |     {
+  85  |         annotation: {
+  86  |             type: 'Sorting',
+  87  |             description: 'Verify selected sorting option stays selected after page reload'
+  88  |         }
+  89  |     },
+  90  |     async ({ page }) => {
+  91  | 
+  92  |         await page.sortProduct('Name: A to Z');
+  93  | 
+  94  |         await page.reload();
+  95  | 
+  96  |         await expect(page.locator('#products-orderby'))
+  97  |             .toBeVisible();
+  98  |     }
+  99  | );
+  100 | 
+  101 | test(
+  102 |     'TC_PRODUCT_018 - Verify Product Count After Sorting',
+  103 |     {
+  104 |         annotation: {
+  105 |             type: 'Sorting',
+  106 |             description: 'Verify product count remains same after applying sorting'
+  107 |         }
+  108 |     },
+  109 |     async ({ page }) => {
+  110 | 
+  111 |         const productsBeforeSorting = await page.locator('.product-item').count();
+  112 | 
+  113 |         await page.sortProduct('Price: Low to High');
+  114 | 
+  115 |         const productsAfterSorting = await page.locator('.product-item').count();
+  116 | 
+  117 |         expect(productsBeforeSorting).toBe(productsAfterSorting);
+  118 |     }
+  119 | );
+  120 | 
+  121 | test(
+  122 |     'TC_PRODUCT_019 - Verify Sorting Dropdown Is Enabled',
+  123 |     {
+  124 |         annotation: {
+  125 |             type: 'Sorting',
+  126 |             description: 'Verify sorting dropdown is enabled for user interaction'
+  127 |         }
+  128 |     },
+  129 |     async ({ page }) => {
+  130 | 
+  131 |         await expect(page.locator('#products-orderby'))
+  132 |             .toBeEnabled();
+  133 |     }
+  134 | );
+  135 | 
+  136 | test(
+  137 |     'TC_PRODUCT_020 - Verify Products Are Visible After Applying Sorting',
+  138 |     {
+  139 |         annotation: {
+  140 |             type: 'Sorting',
+  141 |             description: 'Verify products remain visible after sorting is applied'
+```
