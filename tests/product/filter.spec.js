@@ -8,7 +8,7 @@ test.describe('Product Filter Tests', () => {
 
     test.beforeEach(async ({ page }) => {
 
-        productPage = new ProductPage(page);
+        const productPage = new ProductPage(page);
 
         await page.goto('https://demo.nopcommerce.com/desktops');
     });

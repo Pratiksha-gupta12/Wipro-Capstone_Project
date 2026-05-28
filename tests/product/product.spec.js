@@ -213,11 +213,12 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Product Service Tests', () => {
+test.beforeEach(async ({ page }) => {
 
-    test.beforeEach(async ({ productPage }) => {
-
-        await productPage.gotoHomePage();
-    });
+    await page.goto(
+        'https://demo.nopcommerce.com/'
+    );
+});
 
     test(
     'TC_PRODUCT_001 - Search Existing Product',
