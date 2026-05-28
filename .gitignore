@@ -10,3 +10,4 @@ node_modules/
 /playwright/allure-report/
 /allure-results/
 /allure-report/
+.env

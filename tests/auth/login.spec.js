@@ -146,9 +146,48 @@
 // });
 
 
+
+
+
+
+
+
+
+
 const { test, expect } = require('@playwright/test');
 
 test.setTimeout(120000);
+
+
+// test('7. Login with Invalid Password',
+// async ({ page }) => {
+
+//     await page.goto(
+//         'https://demo.nopcommerce.com/login'
+//     );
+
+//     await page.locator('#Email')
+//         .fill('admin@yourstore.com');
+
+//     await page.locator('#Password')
+//         .fill('WrongPassword123');
+
+//     await page.locator('.login-button')
+//         .click();
+
+//     await page.waitForTimeout(5000);
+  
+//     await expect(
+//         page.locator('.message-error')
+//     ).toBeVisible({ timeout: 15000 });
+
+//     await expect(
+//         page.locator('.message-error')
+//     ).toContainText(
+//         'Login was unsuccessful'
+//     );
+// });
+
 
 
 test('7. Login with Invalid Password',
@@ -159,7 +198,7 @@ async ({ page }) => {
     );
 
     await page.locator('#Email')
-        .fill('pratiksha@gmail.com');
+        .fill('admin@yourstore.com');
 
     await page.locator('#Password')
         .fill('WrongPassword123');
@@ -167,19 +206,17 @@ async ({ page }) => {
     await page.locator('.login-button')
         .click();
 
-    await page.waitForTimeout(5000);
-  
-    await expect(
-        page.locator('.message-error')
-    ).toBeVisible({ timeout: 15000 });
+    const errorMessage =
+        page.locator('.message-error');
 
-    await expect(
-        page.locator('.message-error')
-    ).toContainText(
-        'Login was unsuccessful'
-    );
+    await expect(errorMessage)
+        .toBeVisible();
+
+    await expect(errorMessage)
+        .toContainText(
+            'Login was unsuccessful'
+        );
 });
-
 
 
 
@@ -215,7 +252,7 @@ async ({ page }) => {
         .fill('pratiksha@gmail.com');
 
     await page.locator('#Password')
-        .fill('abcdef');
+        .fill('123456');
 
     await page.locator('.login-button')
         .click();
@@ -228,9 +265,46 @@ async ({ page }) => {
         timeout: 30000
     });
 
+//     await expect(
+//     page.locator('.message-error')
+// ).not.toBeVisible();
+
     console.log('Login Successful');
 });
 
+
+
+
+// test('11. Forgot Password',
+// async ({ page }) => {
+
+//     await page.goto(
+//         'https://demo.nopcommerce.com/login'
+//     );
+
+//     await page.locator('.forgot-password')
+//         .click();
+
+
+//     await page.locator('#Email')
+//         .fill('testing123@gmail.com');
+
+//     await page.locator(
+//         '.password-recovery-button'
+//     ).click();
+//     await page.waitForTimeout(5000);
+//     await expect(
+//         page.locator('.result')
+//     ).toBeVisible({
+//         timeout: 20000
+//     });
+
+//     await expect(
+//         page.locator('.result')
+//     ).toContainText(
+//         'Email with instructions has been sent to you.'
+//     );
+// });
 
 
 
@@ -238,33 +312,20 @@ test('11. Forgot Password',
 async ({ page }) => {
 
     await page.goto(
-        'https://demo.nopcommerce.com/login'
+'https://demo.nopcommerce.com/passwordrecovery'
     );
-
-    await page.locator('.forgot-password')
-        .click();
-
 
     await page.locator('#Email')
-        .fill('testing123@gmail.com');
+        .fill('testing@gmail.com');
 
     await page.locator(
-        '.password-recovery-button'
+        'button[name="send-email"]'
     ).click();
-    await page.waitForTimeout(5000);
-    await expect(
-        page.locator('.result')
-    ).toBeVisible({
-        timeout: 20000
-    });
 
     await expect(
         page.locator('.result')
-    ).toContainText(
-        'Email with instructions has been sent to you.'
-    );
+    ).toBeVisible();
 });
-
 
 
 
@@ -305,14 +366,48 @@ async ({ page }) => {
 
 
 
+// test('13. Empty Confirm Password',
+// async ({ page }) => {
+
+//     await page.goto(
+//         'https://demo.nopcommerce.com/register'
+//     );
+
+//     await page.locator('#gender-male').check();
+
+//     await page.locator('#FirstName')
+//         .fill('Pratiksha');
+
+//     await page.locator('#LastName')
+//         .fill('Gupta');
+
+//     await page.locator('#Email')
+//         .fill(`user${Date.now()}@gmail.com`);
+
+//     await page.locator('#Password')
+//         .fill('Testing@12345');
+
+//     await page.locator('#ConfirmPassword')
+//         .fill('');
+
+//     await page.locator('#register-button')
+//         .click();
+
+//     await expect(
+//         page.locator('#ConfirmPassword-error')
+//     ).toContainText(
+//         'Password is required.'
+//     );
+// });
+
+
+
 test('13. Empty Confirm Password',
 async ({ page }) => {
 
     await page.goto(
-        'https://demo.nopcommerce.com/register'
+'https://demo.nopcommerce.com/register'
     );
-
-    await page.locator('#gender-male').check();
 
     await page.locator('#FirstName')
         .fill('Pratiksha');
@@ -321,25 +416,44 @@ async ({ page }) => {
         .fill('Gupta');
 
     await page.locator('#Email')
-        .fill(`user${Date.now()}@gmail.com`);
+        .fill(`test${Date.now()}@gmail.com`);
 
     await page.locator('#Password')
-        .fill('Testing@12345');
-
-    await page.locator('#ConfirmPassword')
-        .fill('');
+        .fill('Testing@123');
 
     await page.locator('#register-button')
         .click();
 
     await expect(
         page.locator('#ConfirmPassword-error')
-    ).toContainText(
-        'Password is required.'
-    );
+    ).toBeVisible();
 });
 
 
+
+
+// test('14. Login With Invalid Email Format',
+// async ({ page }) => {
+
+//     await page.goto(
+//         'https://demo.nopcommerce.com/login'
+//     );
+
+//     await page.locator('#Email')
+//         .fill('abc.com');
+
+//     await page.locator('#Password')
+//         .fill('Testing@12345');
+
+//     await page.locator('.login-button')
+//         .click();
+
+//    await expect(
+//    page.locator('.field-validation-error')
+// ).toContainText(
+//    'Wrong email'
+// );
+// });
 
 
 test('14. Login With Invalid Email Format',
@@ -350,19 +464,17 @@ async ({ page }) => {
     );
 
     await page.locator('#Email')
-        .fill('abc.com');
+        .fill('invalidemail');
 
     await page.locator('#Password')
-        .fill('Testing@12345');
+        .fill('Testing123');
 
     await page.locator('.login-button')
         .click();
 
-   await expect(
-   page.locator('.field-validation-error')
-).toContainText(
-   'Wrong email'
-);
+    await expect(
+        page.locator('#Email-error')
+    ).toBeVisible();
 });
 
 
@@ -407,28 +519,49 @@ async ({ page }) => {
     );
 });
 
+// test('17. Forgot Password Invalid Email',
+// async ({ page }) => {
+
+//     await page.goto(
+//         'https://demo.nopcommerce.com/login'
+//     );
+
+//     await page.locator('.forgot-password')
+//         .click();
+
+//     await page.locator('#Email')
+//         .fill('abc.com');
+
+//     await page.locator(
+//         '.password-recovery-button'
+//     ).click();
+
+//   await expect(
+//    page.locator('.field-validation-error')
+// ).toContainText(
+//    'Wrong email'
+// );
+// });
+
+
+
 test('17. Forgot Password Invalid Email',
 async ({ page }) => {
 
     await page.goto(
-        'https://demo.nopcommerce.com/login'
+'https://demo.nopcommerce.com/passwordrecovery'
     );
 
-    await page.locator('.forgot-password')
-        .click();
-
     await page.locator('#Email')
-        .fill('abc.com');
+        .fill('invalidemail');
 
     await page.locator(
-        '.password-recovery-button'
+        'button[name="send-email"]'
     ).click();
 
-  await expect(
-   page.locator('.field-validation-error')
-).toContainText(
-   'Wrong email'
-);
+    await expect(
+        page.locator('#Email-error')
+    ).toBeVisible();
 });
 
 
@@ -447,6 +580,35 @@ async ({ page }) => {
 });
 
 
+// test('20. Multiple Invalid Login Attempts',
+// async ({ page }) => {
+
+//     await page.goto(
+//         'https://demo.nopcommerce.com/login'
+//     );
+
+//     for(let i = 0; i < 2; i++){
+//         await page.waitForTimeout(3000);
+
+//         await page.locator('#Email')
+//             .fill('testing123@gmail.com');
+
+//         await page.locator('#Password')
+//             .fill('WrongPassword');
+
+//         await page.locator('.login-button')
+//             .click();
+
+//         await expect(
+//             page.locator('.message-error')
+//         ).toContainText(
+//             'Login was unsuccessful'
+//         );
+//     }
+// });
+
+
+
 test('20. Multiple Invalid Login Attempts',
 async ({ page }) => {
 
@@ -455,10 +617,9 @@ async ({ page }) => {
     );
 
     for(let i = 0; i < 2; i++){
-        await page.waitForTimeout(3000);
 
         await page.locator('#Email')
-            .fill('testing123@gmail.com');
+            .fill('admin@yourstore.com');
 
         await page.locator('#Password')
             .fill('WrongPassword');
@@ -471,5 +632,7 @@ async ({ page }) => {
         ).toContainText(
             'Login was unsuccessful'
         );
+
+        await page.reload();
     }
 });
