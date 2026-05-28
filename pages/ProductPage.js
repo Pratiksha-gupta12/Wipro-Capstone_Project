@@ -345,14 +345,16 @@ export class ProductPage {
     }
 
     // Open First Product
-  async openFirstProduct(){
+async openFirstProduct(){
 
     await this.productTitle.first()
-        .waitFor({ state: 'visible' });
+        .waitFor({
+            state: 'visible'
+        });
 
-    await this.productTitle.first().click();
+    await this.productTitle.first()
+        .click();
 }
-
     // Open Product
     async openProduct(){
 
