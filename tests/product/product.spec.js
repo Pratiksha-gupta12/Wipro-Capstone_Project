@@ -210,8 +210,7 @@
 
 
 
-const { test, expect } =
-require('../../fixtures/productFixture');
+import { test, expect } from '@playwright/test';
 
 test.describe('Product Service Tests', () => {
 
