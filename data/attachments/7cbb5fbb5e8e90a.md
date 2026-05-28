@@ -1,0 +1,197 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: product/product.spec.js >> Product Service Tests >> TC_PRODUCT_011 - Verify User Can Open Search Result
+- Location: tests/product/product.spec.js:580:5
+
+# Error details
+
+```
+TimeoutError: page.waitForSelector: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator('.product-title a') to be visible
+
+```
+
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - heading "demo.nopcommerce.com" [level=1] [ref=e5]
+      - heading "Performing security verification" [level=2] [ref=e6]
+      - paragraph [ref=e7]: This website uses a security service to protect against malicious bots. This page is displayed while the website verifies you are not a bot.
+  - contentinfo [ref=e11]:
+    - generic [ref=e13]:
+      - generic [ref=e15]:
+        - text: "Ray ID:"
+        - code [ref=e16]: a02cce1fdf2c41be
+      - generic [ref=e17]:
+        - generic [ref=e18]:
+          - text: Performance and Security by
+          - link "Cloudflare" [ref=e19] [cursor=pointer]:
+            - /url: https://www.cloudflare.com?utm_source=challenge&utm_campaign=m
+        - link "Privacy" [ref=e21] [cursor=pointer]:
+          - /url: https://www.cloudflare.com/privacypolicy/
+```
+
+# Test source
+
+```ts
+  490 |     ).toBeVisible({
+  491 |         timeout: 15000
+  492 |     });
+  493 | });
+  494 | 
+  495 | 
+  496 | // test(
+  497 | // 'TC_PRODUCT_009 - Verify Add To Cart Button Visible',
+  498 | // async ({ page }) => {
+  499 | 
+  500 | //     await page.goto(
+  501 | // 'https://demo.nopcommerce.com/desktops'
+  502 | //     );
+  503 | 
+  504 | //     await expect(
+  505 | //         page.locator('.product-box-add-to-cart-button').first()
+  506 | //     ).toBeVisible();
+  507 | // });
+  508 | 
+  509 | 
+  510 | test(
+  511 | 'TC_PRODUCT_009 - Verify Add To Cart Button Visible',
+  512 | async ({ page }) => {
+  513 | 
+  514 |     await page.goto(
+  515 | 'https://demo.nopcommerce.com/desktops'
+  516 |     );
+  517 | 
+  518 |     await page.waitForLoadState(
+  519 |         'domcontentloaded'
+  520 |     );
+  521 | 
+  522 |     await page.waitForTimeout(3000);
+  523 | 
+  524 |     await expect(
+  525 |         page.locator('.product-box-add-to-cart-button').first()
+  526 |     ).toBeVisible({
+  527 |         timeout: 15000
+  528 |     });
+  529 | });
+  530 | 
+  531 | // test(
+  532 | // 'TC_PRODUCT_010 - Verify Product Price Is Displayed',
+  533 | // async ({ page }) => {
+  534 | 
+  535 | //     await page.goto(
+  536 | // 'https://demo.nopcommerce.com/desktops'
+  537 | //     );
+  538 | 
+  539 | //     await expect(
+  540 | //         page.locator('.prices').first()
+  541 | //     ).toBeVisible();
+  542 | // });
+  543 | 
+  544 | 
+  545 | test(
+  546 | 'TC_PRODUCT_010 - Verify Product Price Is Displayed',
+  547 | async ({ page }) => {
+  548 | 
+  549 |     await page.goto(
+  550 | 'https://demo.nopcommerce.com/desktops'
+  551 |     );
+  552 | 
+  553 |     await expect(
+  554 |         page.locator('.prices').first()
+  555 |     ).toBeVisible({
+  556 |         timeout: 15000
+  557 |     });
+  558 | });
+  559 | 
+  560 | // test(
+  561 | // 'TC_PRODUCT_011 - Verify User Can Open Search Result',
+  562 | // async ({ page }) => {
+  563 | 
+  564 | //     await page.locator('#small-searchterms')
+  565 | //         .fill('computer');
+  566 | 
+  567 | //     await page.locator('.search-box-button')
+  568 | //         .click();
+  569 | 
+  570 | //     await page.locator('.product-title a')
+  571 | //         .first()
+  572 | //         .click();
+  573 | 
+  574 | //     await expect(
+  575 | //         page.locator('h1')
+  576 | //     ).toBeVisible();
+  577 | // });
+  578 | 
+  579 | 
+  580 | test(
+  581 | 'TC_PRODUCT_011 - Verify User Can Open Search Result',
+  582 | async ({ page }) => {
+  583 | 
+  584 |     await page.locator('#small-searchterms')
+  585 |         .fill('computer');
+  586 | 
+  587 |     await page.locator('.search-box-button')
+  588 |         .click();
+  589 | 
+> 590 |     await page.waitForSelector('.product-title a');
+      |                ^ TimeoutError: page.waitForSelector: Timeout 30000ms exceeded.
+  591 | 
+  592 |     await page.locator('.product-title a')
+  593 |         .first()
+  594 |         .click();
+  595 | 
+  596 |     await expect(
+  597 |         page.locator('h1')
+  598 |     ).toBeVisible({
+  599 |         timeout: 15000
+  600 |     });
+  601 | });
+  602 | 
+  603 | 
+  604 | // test(
+  605 | // 'TC_PRODUCT_012 - Verify Product Count Greater Than Zero',
+  606 | // async ({ page }) => {
+  607 | 
+  608 | //     await page.goto(
+  609 | // 'https://demo.nopcommerce.com/desktops'
+  610 | //     );
+  611 | 
+  612 | //     const products =
+  613 | //         await page.locator('.item-box').count();
+  614 | 
+  615 | //     expect(products).toBeGreaterThan(0);
+  616 | // });
+  617 | 
+  618 | 
+  619 | test(
+  620 | 'TC_PRODUCT_012 - Verify Product Count Greater Than Zero',
+  621 | async ({ page }) => {
+  622 | 
+  623 |     await page.goto(
+  624 | 'https://demo.nopcommerce.com/desktops'
+  625 |     );
+  626 | 
+  627 |     await page.waitForSelector('.item-box');
+  628 | 
+  629 |     const count =
+  630 |         await page.locator('.item-box').count();
+  631 | 
+  632 |     expect(count).toBeGreaterThan(0);
+  633 | });
+  634 | 
+  635 | 
+  636 |  });
+  637 | 
+  638 | 
+```

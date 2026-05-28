@@ -1,0 +1,248 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: product/product.spec.js >> Product Service Tests >> TC_PRODUCT_002 - Search Non Existing Product
+- Location: tests/product/product.spec.js:299:5
+
+# Error details
+
+```
+Error: expect(locator).toContainText(expected) failed
+
+Locator: locator('.no-result')
+Expected substring: "No products were found"
+Timeout: 5000ms
+Error: element(s) not found
+
+Call log:
+  - Expect "toContainText" with timeout 5000ms
+  - waiting for locator('.no-result')
+
+```
+
+```yaml
+- main:
+  - heading "demo.nopcommerce.com" [level=1]
+  - heading "Performing security verification" [level=2]
+  - paragraph: This website uses a security service to protect against malicious bots. This page is displayed while the website verifies you are not a bot.
+- contentinfo:
+  - text: "Ray ID:"
+  - code: a02c9dc80840a555
+  - text: Performance and Security by
+  - link "Cloudflare":
+    - /url: https://www.cloudflare.com?utm_source=challenge&utm_campaign=m
+  - link "Privacy":
+    - /url: https://www.cloudflare.com/privacypolicy/
+```
+
+# Test source
+
+```ts
+  211 | 
+  212 | 
+  213 | import { test, expect } from '@playwright/test';
+  214 | import { ProductPage } from '../../pages/ProductPage';
+  215 | test.describe('Product Service Tests', () => {
+  216 | 
+  217 | let productPage;
+  218 | 
+  219 | test.beforeEach(async ({ page }) => {
+  220 | 
+  221 |     productPage = new ProductPage(page);
+  222 | 
+  223 |     await page.goto(
+  224 |         'https://demo.nopcommerce.com/'
+  225 |     );
+  226 | });
+  227 | 
+  228 |     // test(
+  229 |     // 'TC_PRODUCT_001 - Search Existing Product',
+  230 | 
+  231 |     // {
+  232 |     //     annotation: {
+  233 |     //         type: 'Search',
+  234 |     //         description:
+  235 |     //         'Verify user can search existing product'
+  236 |     //     }
+  237 | 
+  238 |     // },
+  239 | 
+  240 |     // async ({ page }) => {
+  241 | 
+  242 | 
+  243 |     //     await productPage.searchProduct(
+  244 |     //         'computer'
+  245 |     //     );
+  246 | 
+  247 |     //     await expect(
+  248 |     //         productPage.productItems.first()
+  249 |     //     ).toBeVisible();
+  250 |     // });
+  251 | 
+  252 | 
+  253 | 
+  254 |     test(
+  255 | 'TC_PRODUCT_001 - Search Existing Product',
+  256 | async ({ page }) => {
+  257 | 
+  258 |     await productPage.searchProduct(
+  259 |         'computer'
+  260 |     );
+  261 | 
+  262 |     await page.waitForLoadState('networkidle');
+  263 | 
+  264 |     await expect(
+  265 |         page.locator('.search-results')
+  266 |     ).toBeVisible();
+  267 | 
+  268 |     await expect(
+  269 |         page.locator('.item-box').first()
+  270 |     ).toBeVisible();
+  271 | });
+  272 | 
+  273 | //     test(
+  274 | //     'TC_PRODUCT_002 - Search Non Existing Product',
+  275 | 
+  276 | //     {
+  277 | //         annotation: {
+  278 | //             type: 'Search',
+  279 | //             description:
+  280 | //             'Verify proper message displayed for invalid search'
+  281 | //         }
+  282 | //     },
+  283 | 
+  284 | //     async ({ page }) => {
+  285 | 
+  286 | //       await productPage.searchProduct(
+  287 | //     'abcdefghxyz'
+  288 | // );
+  289 | 
+  290 | // await expect(
+  291 | //     productPage.noResult
+  292 | // ).toContainText(
+  293 | //     'No products were found'
+  294 | // );
+  295 | //     });
+  296 | 
+  297 | 
+  298 | 
+  299 | test(
+  300 | 'TC_PRODUCT_002 - Search Non Existing Product',
+  301 | async ({ page }) => {
+  302 | 
+  303 |     await productPage.searchProduct(
+  304 |         'abcdefghxyz'
+  305 |     );
+  306 | 
+  307 |     await page.waitForLoadState('networkidle');
+  308 | 
+  309 |     await expect(
+  310 |         page.locator('.no-result')
+> 311 |     ).toContainText(
+      |       ^ Error: expect(locator).toContainText(expected) failed
+  312 |         'No products were found'
+  313 |     );
+  314 | });
+  315 | 
+  316 | 
+  317 |     test(
+  318 |     'TC_PRODUCT_003 - Open Product Details Page',
+  319 | 
+  320 |     {
+  321 |         annotation: {
+  322 |             type: 'Product',
+  323 |             description:
+  324 |             'Verify product details page opens successfully'
+  325 |         }
+  326 |     },
+  327 | 
+  328 |     async ({ page }) => {
+  329 | 
+  330 |         await page.goto(
+  331 | 'https://demo.nopcommerce.com/desktops'
+  332 |         );
+  333 | 
+  334 |         await productPage.openFirstProduct();
+  335 | 
+  336 |         await expect(
+  337 |             page.locator('h1')
+  338 |         ).toBeVisible();
+  339 |     });
+  340 | 
+  341 | //     test(
+  342 | //     'TC_PRODUCT_004 - Verify Product Price Visible',
+  343 | //     {
+  344 | //         annotation: {
+  345 | //             type: 'Product',
+  346 | //             description:
+  347 | //             'Verify product price is visible on details page'
+  348 | //         }
+  349 | //     },
+  350 | 
+  351 | //     async ({  page }) => {
+  352 | 
+  353 | //         await page.goto(
+  354 | // 'https://demo.nopcommerce.com/desktops'
+  355 | //         );
+  356 | 
+  357 | //         await productPage.openFirstProduct();
+  358 | 
+  359 | //         await expect(
+  360 | //             productPage.productPrice
+  361 | //         ).toBeVisible();
+  362 | //     });
+  363 | 
+  364 | 
+  365 | 
+  366 | test(
+  367 | 'TC_PRODUCT_004 - Verify Product Price Visible',
+  368 | async ({ page }) => {
+  369 | 
+  370 |     await page.goto(
+  371 | 'https://demo.nopcommerce.com/desktops'
+  372 |     );
+  373 | 
+  374 |     await page.waitForLoadState('networkidle');
+  375 | 
+  376 |     await productPage.openFirstProduct();
+  377 | 
+  378 |     await expect(
+  379 |         page.locator('.product-price')
+  380 |     ).toBeVisible();
+  381 | });
+  382 | 
+  383 | 
+  384 | //     test(
+  385 | //     'TC_PRODUCT_005 - Verify Product Image Visible',
+  386 | 
+  387 | //     {
+  388 | //         annotation: {
+  389 | //             type: 'Product',
+  390 | //             description:
+  391 | //             'Verify product image is visible on details page'
+  392 | //         }
+  393 | //     },
+  394 | 
+  395 | //     async ({  page }) => {
+  396 | 
+  397 | //         await page.goto(
+  398 | // 'https://demo.nopcommerce.com/desktops'
+  399 | //         );
+  400 | 
+  401 | //        await productPage.openFirstProduct();
+  402 | 
+  403 | //         await expect(
+  404 | //             productPage.productImage
+  405 | //         ).toBeVisible();
+  406 | //     });
+  407 | 
+  408 | 
+  409 | test(
+  410 | 'TC_PRODUCT_005 - Verify Product Image Visible',
+  411 | async ({ page }) => {
+```

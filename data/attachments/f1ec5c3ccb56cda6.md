@@ -1,0 +1,152 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: auth/login.spec.js >> 20. Multiple Invalid Login Attempts
+- Location: tests/auth/login.spec.js:454:1
+
+# Error details
+
+```
+Error: expect(locator).toContainText(expected) failed
+
+Locator: locator('.message-error')
+Expected substring: "Login was unsuccessful"
+Timeout: 5000ms
+Error: element(s) not found
+
+Call log:
+  - Expect "toContainText" with timeout 5000ms
+  - waiting for locator('.message-error')
+
+```
+
+```yaml
+- main:
+  - heading "demo.nopcommerce.com" [level=1]
+  - heading "Performing security verification" [level=2]
+  - paragraph: This website uses a security service to protect against malicious bots. This page is displayed while the website verifies you are not a bot.
+- contentinfo:
+  - text: "Ray ID:"
+  - code: a02afa4f1e8bf647
+  - text: Performance and Security by
+  - link "Cloudflare":
+    - /url: https://www.cloudflare.com?utm_source=challenge&utm_campaign=m
+  - link "Privacy":
+    - /url: https://www.cloudflare.com/privacypolicy/
+```
+
+# Test source
+
+```ts
+  375 | test('15. Login With Unregistered Email',
+  376 | async ({ page }) => {
+  377 | 
+  378 |     await page.goto(
+  379 |         'https://demo.nopcommerce.com/login'
+  380 |     );
+  381 | 
+  382 |     await page.locator('#Email')
+  383 |         .fill(`random${Date.now()}@gmail.com`);
+  384 | 
+  385 |     await page.locator('#Password')
+  386 |         .fill('Testing@12345');
+  387 | 
+  388 |     await page.locator('.login-button')
+  389 |         .click();
+  390 | 
+  391 |     await expect(
+  392 |         page.locator('.message-error')
+  393 |     ).toContainText(
+  394 |         'Login was unsuccessful'
+  395 |     );
+  396 | });
+  397 | 
+  398 | 
+  399 | test('16. Verify Password Field Is Hidden',
+  400 | async ({ page }) => {
+  401 | 
+  402 |     await page.goto(
+  403 |         'https://demo.nopcommerce.com/login'
+  404 |     );
+  405 | 
+  406 |     await expect(
+  407 |         page.locator('#Password')
+  408 |     ).toHaveAttribute(
+  409 |         'type',
+  410 |         'password'
+  411 |     );
+  412 | });
+  413 | 
+  414 | test('17. Forgot Password Invalid Email',
+  415 | async ({ page }) => {
+  416 | 
+  417 |     await page.goto(
+  418 |         'https://demo.nopcommerce.com/login'
+  419 |     );
+  420 | 
+  421 |     await page.locator('.forgot-password')
+  422 |         .click();
+  423 | 
+  424 |     await page.locator('#Email')
+  425 |         .fill('abc.com');
+  426 | 
+  427 |     await page.locator(
+  428 |         '.password-recovery-button'
+  429 |     ).click();
+  430 | 
+  431 |   await expect(
+  432 |    page.locator('.field-validation-error')
+  433 | ).toContainText(
+  434 |    'Wrong email'
+  435 | );
+  436 | });
+  437 | 
+  438 | 
+  439 | 
+  440 | test('18. Remember Me Checkbox Visible',
+  441 | async ({ page }) => {
+  442 | 
+  443 |    await page.goto(
+  444 |       'https://demo.nopcommerce.com/login'
+  445 |    );
+  446 | 
+  447 |    await expect(
+  448 |       page.locator('#RememberMe')
+  449 |    ).toBeVisible();
+  450 | 
+  451 | });
+  452 | 
+  453 | 
+  454 | test('20. Multiple Invalid Login Attempts',
+  455 | async ({ page }) => {
+  456 | 
+  457 |     await page.goto(
+  458 |         'https://demo.nopcommerce.com/login'
+  459 |     );
+  460 | 
+  461 |     for(let i = 0; i < 2; i++){
+  462 |         await page.waitForTimeout(3000);
+  463 | 
+  464 |         await page.locator('#Email')
+  465 |             .fill('testing123@gmail.com');
+  466 | 
+  467 |         await page.locator('#Password')
+  468 |             .fill('WrongPassword');
+  469 | 
+  470 |         await page.locator('.login-button')
+  471 |             .click();
+  472 | 
+  473 |         await expect(
+  474 |             page.locator('.message-error')
+> 475 |         ).toContainText(
+      |           ^ Error: expect(locator).toContainText(expected) failed
+  476 |             'Login was unsuccessful'
+  477 |         );
+  478 |     }
+  479 | });
+```

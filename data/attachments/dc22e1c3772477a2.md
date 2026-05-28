@@ -1,0 +1,159 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: product/product.spec.js >> TC_PRODUCT_002 - Search Non Existing Product
+- Location: tests/product/product.spec.js:34:1
+
+# Error details
+
+```
+Error: expect(locator).toContainText(expected) failed
+
+Locator: locator('.no-result')
+Expected substring: "No products were found"
+Timeout: 5000ms
+Error: element(s) not found
+
+Call log:
+  - Expect "toContainText" with timeout 5000ms
+  - waiting for locator('.no-result')
+
+```
+
+```yaml
+- main:
+  - heading "demo.nopcommerce.com" [level=1]
+  - heading "Performing security verification" [level=2]
+  - paragraph: This website uses a security service to protect against malicious bots. This page is displayed while the website verifies you are not a bot.
+- contentinfo:
+  - text: "Ray ID:"
+  - code: a01c8e566a7317cf
+  - text: Performance and Security by
+  - link "Cloudflare":
+    - /url: https://www.cloudflare.com?utm_source=challenge&utm_campaign=m
+  - link "Privacy":
+    - /url: https://www.cloudflare.com/privacypolicy/
+```
+
+# Test source
+
+```ts
+  1   | const { test, expect } =
+  2   | require('@playwright/test');
+  3   | 
+  4   | test(
+  5   | 'TC_PRODUCT_001 - Search Existing Product',
+  6   | async ({ page }) => {
+  7   | 
+  8   |     await page.goto(
+  9   |         'https://demo.nopcommerce.com'
+  10  |     );
+  11  | 
+  12  |     await page.locator('#small-searchterms')
+  13  |         .fill('computer');
+  14  | 
+  15  |     // Use Enter instead of click
+  16  |     await page.locator('#small-searchterms')
+  17  |         .press('Enter');
+  18  | 
+  19  |     // Wait for search page
+  20  |     await page.waitForURL(
+  21  |         /search/,
+  22  |         { timeout: 20000 }
+  23  |     );
+  24  | 
+  25  |     // Verify search results visible
+  26  |     await expect(
+  27  |         page.locator('.item-box')
+  28  |             .first()
+  29  |     ).toBeVisible({
+  30  |         timeout: 20000
+  31  |     });
+  32  | });
+  33  | 
+  34  | test(
+  35  | 'TC_PRODUCT_002 - Search Non Existing Product',
+  36  | async ({ page }) => {
+  37  | 
+  38  |     await page.goto(
+  39  |         'https://demo.nopcommerce.com'
+  40  |     );
+  41  | 
+  42  |     await page.locator('#small-searchterms')
+  43  |         .fill('abcdefghxyz');
+  44  | 
+  45  |     // Press Enter
+  46  |     await page.locator('#small-searchterms')
+  47  |         .press('Enter');
+  48  | 
+  49  |     await page.waitForURL(
+  50  |         /search/,
+  51  |         { timeout: 20000 }
+  52  |     );
+  53  | 
+  54  |     await expect(
+  55  |         page.locator('.no-result')
+> 56  |     ).toContainText(
+      |       ^ Error: expect(locator).toContainText(expected) failed
+  57  |         'No products were found'
+  58  |     );
+  59  | });
+  60  | 
+  61  | test(
+  62  | 'TC_PRODUCT_003 - Open Product Details Page',
+  63  | async ({ page }) => {
+  64  | 
+  65  |     await page.goto(
+  66  | 'https://demo.nopcommerce.com/desktops'
+  67  |     );
+  68  | 
+  69  |     await page.locator(
+  70  | 'a:has-text("Build your own computer")'
+  71  |     ).click();
+  72  | 
+  73  |     await expect(page)
+  74  |         .toHaveURL(
+  75  |             /build-your-own-computer/
+  76  |         );
+  77  | 
+  78  |     await expect(
+  79  |         page.locator('h1')
+  80  |     ).toContainText(
+  81  |         'Build your own computer'
+  82  |     );
+  83  | });
+  84  | 
+  85  | 
+  86  | test(
+  87  | 'TC_PRODUCT_004 - Verify Product Price Visible',
+  88  | async ({ page }) => {
+  89  | 
+  90  |     await page.goto(
+  91  | 'https://demo.nopcommerce.com/build-your-own-computer'
+  92  |     );
+  93  | 
+  94  |     await expect(
+  95  |         page.locator('.product-price')
+  96  |     ).toBeVisible();
+  97  | });
+  98  | 
+  99  | test(
+  100 | 'TC_PRODUCT_005 - Verify Product Image Visible',
+  101 | async ({ page }) => {
+  102 | 
+  103 |     await page.goto(
+  104 | 'https://demo.nopcommerce.com/build-your-own-computer'
+  105 |     );
+  106 | 
+  107 |     await expect(
+  108 |         page.locator('.picture img')
+  109 |     ).toBeVisible({
+  110 |         timeout: 20000
+  111 |     });
+  112 | });
+```
