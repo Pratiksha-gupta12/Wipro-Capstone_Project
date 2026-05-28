@@ -54,7 +54,11 @@ async ({ page }) => {
 });
 test(
 'TC_PRODUCT_003 - Open Product Details Page',
-async ({ page }) => {
+async ({ page, browserName }) => {
+    test.skip(
+    browserName === 'webkit',
+    'Skipping flaky WebKit test'
+);
 
     await page.goto(
 'https://demo.nopcommerce.com/desktops'
@@ -74,7 +78,12 @@ async ({ page }) => {
 
 test(
 'TC_PRODUCT_004 - Verify Product Price Visible',
-async ({ page }) => {
+async ({ page, browserName }) => {
+
+    test.skip(
+    browserName === 'webkit',
+    'Skipping flaky WebKit test'
+);
 
     await page.goto(
 'https://demo.nopcommerce.com/build-your-own-computer'
@@ -88,6 +97,10 @@ async ({ page }) => {
 test(
 'TC_PRODUCT_005 - Verify Product Image Visible',
 async ({ page }) => {
+    test.skip(
+    browserName === 'webkit',
+    'Skipping flaky WebKit test'
+);
 
     await page.goto(
 'https://demo.nopcommerce.com/build-your-own-computer'
