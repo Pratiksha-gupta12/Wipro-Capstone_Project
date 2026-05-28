@@ -1,0 +1,208 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: auth/registration.spec.js >> Registration with Existing Email
+- Location: tests/auth/registration.spec.js:112:1
+
+# Error details
+
+```
+Error: expect(locator).toContainText(expected) failed
+
+Locator: locator('.validation-summary-errors')
+Expected substring: "The specified email already exists"
+Timeout: 5000ms
+Error: element(s) not found
+
+Call log:
+  - Expect "toContainText" with timeout 5000ms
+  - waiting for locator('.validation-summary-errors')
+
+```
+
+```yaml
+- main:
+  - heading "demo.nopcommerce.com" [level=1]
+  - heading "Performing security verification" [level=2]
+  - paragraph: This website uses a security service to protect against malicious bots. This page is displayed while the website verifies you are not a bot.
+- contentinfo:
+  - text: "Ray ID:"
+  - code: a01a285acf76a778
+  - text: Performance and Security by
+  - link "Cloudflare":
+    - /url: https://www.cloudflare.com?utm_source=challenge&utm_campaign=m
+  - link "Privacy":
+    - /url: https://www.cloudflare.com/privacypolicy/
+```
+
+# Test source
+
+```ts
+  49  |     // Select Gender
+  50  |     await page.locator('#gender-male').check();
+  51  |     await page.locator('#FirstName')
+  52  |         .fill('Pratiksha');
+  53  |     await page.locator('#LastName')
+  54  |         .fill('Gupta');
+  55  | 
+  56  |     await page.locator('#Email')
+  57  |         .fill('abc.com');
+  58  | 
+  59  |     // Enter Password
+  60  |     await page.locator('#Password')
+  61  |         .fill('Testing@12345');
+  62  | 
+  63  |     // Confirm Password
+  64  |     await page.locator('#ConfirmPassword')
+  65  |         .fill('Testing@12345');
+  66  | 
+  67  |     // Click Register
+  68  |     await page.locator('#register-button')
+  69  |         .click();
+  70  | 
+  71  |     // Verify Error Message
+  72  |     await expect(
+  73  |     page.locator('#Email-error')
+  74  | ).toContainText(
+  75  |     'Please enter a valid email address.'
+  76  | );
+  77  | });
+  78  | 
+  79  | 
+  80  | test('4.Registration with Password Mismatch',
+  81  | async ({ page }) => {
+  82  | 
+  83  |     await page.goto(
+  84  |         'https://demo.nopcommerce.com/register'
+  85  |     );
+  86  |     await page.locator('#gender-male').check();
+  87  |     await page.locator('#FirstName')
+  88  |         .fill('Pratiksha');
+  89  |     await page.locator('#LastName')
+  90  |         .fill('Gupta');
+  91  | 
+  92  |     await page.locator('#Email')
+  93  |         .fill(`pratiksha${Date.now()}@gmail.com`);
+  94  | 
+  95  |     await page.locator('#Password')
+  96  |         .fill('Testing@12345');
+  97  | 
+  98  |     await page.locator('#ConfirmPassword')
+  99  |         .fill('Testing@11111');
+  100 | 
+  101 |     await page.locator('#register-button')
+  102 |         .click();
+  103 | 
+  104 |     await expect(
+  105 |         page.locator('#ConfirmPassword-error')
+  106 |     ).toContainText(
+  107 |         'The password and confirmation password do not match.'
+  108 |     );
+  109 | });
+  110 | 
+  111 | 
+  112 | test('Registration with Existing Email',
+  113 | async ({ page }) => {
+  114 | 
+  115 |     await page.goto(
+  116 |         'https://demo.nopcommerce.com/register'
+  117 |     );
+  118 | 
+  119 |     // Select Gender
+  120 |     await page.locator('#gender-male').check();
+  121 | 
+  122 |     // Enter First Name
+  123 |     await page.locator('#FirstName')
+  124 |         .fill('Pratiksha');
+  125 | 
+  126 |     // Enter Last Name
+  127 |     await page.locator('#LastName')
+  128 |         .fill('Gupta');
+  129 | 
+  130 |     // Enter Already Registered Email
+  131 |     await page.locator('#Email')
+  132 |         .fill('testing123@gmail.com');
+  133 | 
+  134 |     // Enter Password
+  135 |     await page.locator('#Password')
+  136 |         .fill('Testing@12345');
+  137 | 
+  138 |     // Confirm Password
+  139 |     await page.locator('#ConfirmPassword')
+  140 |         .fill('Testing@12345');
+  141 | 
+  142 |     // Click Register
+  143 |     await page.locator('#register-button')
+  144 |         .click();
+  145 | 
+  146 |     // Verify Error Message
+  147 |    await expect(
+  148 |     page.locator('.validation-summary-errors')
+> 149 | ).toContainText(
+      |   ^ Error: expect(locator).toContainText(expected) failed
+  150 |     'The specified email already exists'
+  151 | );
+  152 | });
+  153 | 
+  154 | 
+  155 | test(
+  156 | 'TC_AUTH_006 - Successful Registration',
+  157 | async ({ page }) => {
+  158 | 
+  159 |     // Open Register Page
+  160 |     await page.goto(
+  161 |         'https://demo.nopcommerce.com/register'
+  162 |     );
+  163 | 
+  164 |     // Wait for page to load
+  165 |     await page.waitForTimeout(3000);
+  166 | 
+  167 |     // Select Gender
+  168 |     await page.locator('#gender-male')
+  169 |         .check();
+  170 | 
+  171 |     // Enter First Name
+  172 |    await authPage.fillFirstName('Pratiksha');
+  173 | 
+  174 |     // Enter Last Name
+  175 |     await page.locator('#LastName')
+  176 |         .fill('Gupta');
+  177 | 
+  178 |     // Enter Unique Email
+  179 |     await page.locator('#Email')
+  180 |         .fill(`pratiksha${Date.now()}@gmail.com`);
+  181 | 
+  182 |     // Enter Password
+  183 |     await page.locator('#Password')
+  184 |         .fill('Testing@12345');
+  185 | 
+  186 |     // Confirm Password
+  187 |     await page.locator('#ConfirmPassword')
+  188 |         .fill('Testing@12345');
+  189 | 
+  190 |     // Click Register Button
+  191 |     await page.locator('#register-button')
+  192 |         .click();
+  193 | 
+  194 |     // Wait after registration
+  195 |     await page.waitForTimeout(5000);
+  196 | 
+  197 |     // Verify Success Message
+  198 |     const bodyText = await page.locator('body')
+  199 |     .textContent();
+  200 |     console.log(bodyText)
+  201 | 
+  202 | 
+  203 | });
+  204 | 
+  205 | 
+  206 | 
+  207 | 
+  208 | 
+  209 | 
+```

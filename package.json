@@ -1,0 +1,25 @@
+{
+  "name": "wipro-capstone_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pratiksha-gupta12/Wipro-Capstone_Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Pratiksha-gupta12/Wipro-Capstone_Project/issues"
+  },
+  "homepage": "https://github.com/Pratiksha-gupta12/Wipro-Capstone_Project#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.9.1",
+    "allure-commandline": "^2.42.0",
+    "allure-playwright": "^3.9.0"
+  }
+}
