@@ -1,13 +1,12 @@
-import { test, expect } from '@playwright/test';
-import { ProductPage } from '../../pages/ProductPage';
+import { expect, test } from '@playwright/test';
 
 test.describe('Product Sorting Tests', () => {
 
-    let productPage;
+    let page;
 
     test.beforeEach(async ({ page }) => {
 
-        const productPage = new ProductPage(page);
+        const page = new page(page);
 
         await page.goto('https://demo.nopcommerce.com/desktops');
     });
@@ -22,7 +21,7 @@ test.describe('Product Sorting Tests', () => {
         },
         async ({ page }) => {
 
-            await productPage.sortProduct('Name: A to Z');
+            await page.sortProduct('Name: A to Z');
 
             await expect(page.locator('#products-orderby'))
                 .toHaveValue('5');
@@ -39,7 +38,7 @@ test.describe('Product Sorting Tests', () => {
         },
         async ({ page }) => {
 
-            await productPage.sortProduct('Name: Z to A');
+            await page.sortProduct('Name: Z to A');
 
             await expect(page.locator('#products-orderby'))
                 .toHaveValue('6');
@@ -56,7 +55,7 @@ test.describe('Product Sorting Tests', () => {
         },
         async ({ page }) => {
 
-            await productPage.sortProduct('Price: Low to High');
+            await page.sortProduct('Price: Low to High');
 
             await expect(page.locator('#products-orderby'))
                 .toHaveValue('10');
@@ -73,7 +72,7 @@ test.describe('Product Sorting Tests', () => {
         },
         async ({ page }) => {
 
-            await productPage.sortProduct('Price: High to Low');
+            await page.sortProduct('Price: High to Low');
 
             await expect(page.locator('#products-orderby'))
                 .toHaveValue('11');
@@ -90,7 +89,7 @@ test.describe('Product Sorting Tests', () => {
     },
     async ({ page }) => {
 
-        await productPage.sortProduct('Name: A to Z');
+        await page.sortProduct('Name: A to Z');
 
         await page.reload();
 
@@ -111,7 +110,7 @@ test(
 
         const productsBeforeSorting = await page.locator('.product-item').count();
 
-        await productPage.sortProduct('Price: Low to High');
+        await page.sortProduct('Price: Low to High');
 
         const productsAfterSorting = await page.locator('.product-item').count();
 
@@ -144,7 +143,7 @@ test(
     },
     async ({ page }) => {
 
-        await productPage.sortProduct('Name: Z to A');
+        await page.sortProduct('Name: Z to A');
 
         const products = page.locator('.product-item');
 
@@ -163,9 +162,9 @@ test(
     },
     async ({ page }) => {
 
-        await productPage.sortProduct('Name: A to Z');
+        await page.sortProduct('Name: A to Z');
 
-        await productPage.sortProduct('Price: High to Low');
+        await page.sortProduct('Price: High to Low');
 
         await expect(page.locator('#products-orderby'))
             .toHaveValue('11');

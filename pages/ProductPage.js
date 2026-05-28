@@ -1,4 +1,4 @@
-// class ProductPage {
+// class page {
 
 //     constructor(page){
 
@@ -104,11 +104,11 @@
 //     }
 // }
 
-// module.exports = { ProductPage };
+// module.exports = { page };
 
 
 
-// class ProductPage {
+// class page {
 
 //     constructor(page) {
 
@@ -202,14 +202,14 @@
 //     }
 // }
 
-// module.exports = ProductPage;
+// module.exports = page;
 
 
 
 
 import { expect } from '@playwright/test';
 
-export class ProductPage {
+export class page {
 
     constructor(page){
 

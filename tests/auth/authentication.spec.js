@@ -1,4 +1,2 @@
-
-
-
-test('1. Verify register')
+const { test, expect } =
+require('@playwright/test');

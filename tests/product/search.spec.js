@@ -1,25 +1,24 @@
-import { test, expect } from '@playwright/test';
-import { ProductPage } from '../../pages/ProductPage';
+import { expect, test } from '@playwright/test';
 
 test.describe('Product Search Tests', () => {
 
     test('TC_PRODUCT_001 - Search Existing Product', async ({ page }) => {
 
-        const productPage = new ProductPage(page);
+        const page = new page(page);
 
         await page.goto('https://demo.nopcommerce.com/');
 
-        await productPage.searchProduct('Laptop');
+        await page.searchProduct('Laptop');
 
         await expect(page).toHaveURL(/search/);
     });
 test('TC_PRODUCT_002 - Search Non Existing Product', async ({ page }) => {
 
-    const productPage = new ProductPage(page);
+    const page = new page(page);
 
     await page.goto('https://demo.nopcommerce.com/');
 
-    await productPage.searchProduct('abcdefxyz');
+    await page.searchProduct('abcdefxyz');
 
     const noResultMessage = page.locator('.no-result');
 
