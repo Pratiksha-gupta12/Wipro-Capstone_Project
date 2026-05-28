@@ -1,16 +1,16 @@
 import { expect, test } from '@playwright/test';
 
 test.describe('Product Sorting Tests', () => {
+const { ProductPage } = require('../../pages/ProductPage');
 
-    let productPage;
+let productPage;
 
-    test.beforeEach(async ({ page }) => {
+test.beforeEach(async ({ page }) => {
 
-        const productPage = new ProductPage(page);
+    productPage = new ProductPage(page);
 
-        await page.goto('https://demo.nopcommerce.com/desktops');
-    });
-
+    await page.goto('https://demo.nopcommerce.com/desktops');
+});
     test(
         'TC_PRODUCT_013 - Sort Products By Name A-Z',
         {
@@ -21,7 +21,7 @@ test.describe('Product Sorting Tests', () => {
         },
         async ({ page }) => {
 
-            await page.sortProduct('Name: A to Z');
+            await productPage.sortProduct('Name: A to Z');
 
             await expect(page.locator('#products-orderby'))
                 .toHaveValue('5');
@@ -55,7 +55,7 @@ test.describe('Product Sorting Tests', () => {
         },
         async ({ page }) => {
 
-            await page.sortProduct('Price: Low to High');
+            await productPage.sortProduct('Price: Low to High');
 
             await expect(page.locator('#products-orderby'))
                 .toHaveValue('10');

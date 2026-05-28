@@ -209,7 +209,7 @@
 
 import { expect } from '@playwright/test';
 
-export class page {
+export class ProductPage {
 
     constructor(page){
 

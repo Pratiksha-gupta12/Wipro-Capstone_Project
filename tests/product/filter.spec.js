@@ -1,5 +1,6 @@
 
 import { expect, test } from '@playwright/test';
+import { ProductPage } from '../../pages/ProductPage';
 
 test.describe('Product Filter Tests', () => {
 
@@ -7,7 +8,7 @@ test.describe('Product Filter Tests', () => {
 
     test.beforeEach(async ({ page }) => {
 
-        const productPage = new ProductPage(page);
+        productPage = new ProductPage(page);
 
         await page.goto('https://demo.nopcommerce.com/desktops');
     });
