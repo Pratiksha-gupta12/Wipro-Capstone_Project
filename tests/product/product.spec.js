@@ -211,9 +211,14 @@
 
 
 import { test, expect } from '@playwright/test';
-
+import { ProductPage } from '../../pages/ProductPage';
 test.describe('Product Service Tests', () => {
+
+let productPage;
+
 test.beforeEach(async ({ page }) => {
+
+    productPage = new ProductPage(page);
 
     await page.goto(
         'https://demo.nopcommerce.com/'
@@ -234,12 +239,13 @@ test.beforeEach(async ({ page }) => {
 
     async ({ page }) => {
 
-        await page.searchProduct(
+
+        await productPage.searchProduct(
             'computer'
         );
 
         await expect(
-            page.productItems.first()
+            productPage.productItems.first()
         ).toBeVisible();
     });
 
@@ -256,15 +262,15 @@ test.beforeEach(async ({ page }) => {
 
     async ({ page }) => {
 
-        await page.searchProduct(
-            'abcdefghxyz'
-        );
+      await productPage.searchProduct(
+    'abcdefghxyz'
+);
 
-        await expect(
-            page.noResult
-        ).toContainText(
-            'No products were found'
-        );
+await expect(
+    productPage.noResult
+).toContainText(
+    'No products were found'
+);
     });
 
     test(
@@ -284,7 +290,7 @@ test.beforeEach(async ({ page }) => {
 'https://demo.nopcommerce.com/desktops'
         );
 
-        await page.openFirstProduct();
+        await productPage.openFirstProduct();
 
         await expect(
             page.locator('h1')
@@ -293,7 +299,6 @@ test.beforeEach(async ({ page }) => {
 
     test(
     'TC_PRODUCT_004 - Verify Product Price Visible',
-
     {
         annotation: {
             type: 'Product',
@@ -308,10 +313,10 @@ test.beforeEach(async ({ page }) => {
 'https://demo.nopcommerce.com/desktops'
         );
 
-        await page.openFirstProduct();
+        await productPage.openFirstProduct();
 
         await expect(
-            page.productPrice
+            productPage.productPrice
         ).toBeVisible();
     });
 
@@ -332,10 +337,10 @@ test.beforeEach(async ({ page }) => {
 'https://demo.nopcommerce.com/desktops'
         );
 
-        await page.openFirstProduct();
+       await productPage.openFirstProduct();
 
         await expect(
-            page.productImage
+            productPage.productImage
         ).toBeVisible();
     });
 

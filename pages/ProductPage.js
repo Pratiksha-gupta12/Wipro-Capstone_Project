@@ -207,6 +207,73 @@
 
 
 
+// import { expect } from '@playwright/test';
+
+// export class ProductPage {
+
+//     constructor(page){
+
+//         this.page = page;
+
+        
+//         this.searchBox = page.locator('#small-searchterms');
+//         this.searchBtn = page.locator('button[type="submit"]');
+
+       
+//         this.sortDropdown = page.locator('#products-orderby');
+
+        
+//         this.productTitle = page.locator('.product-title');
+
+      
+//         this.compareBtn = page.locator('.add-to-compare-list-button');
+
+       
+//         this.reviewTitle = page.locator('#AddProductReview_Title');
+//         this.reviewText = page.locator('#AddProductReview_ReviewText');
+//         this.reviewSubmitBtn = page.locator('.write-review button');
+
+        
+//         this.successBar = page.locator('.bar-notification.success');
+//     }
+
+    
+//     async searchProduct(productName){
+//         await this.searchBox.fill(productName);
+//         await this.searchBtn.click();
+//     }
+
+   
+//     async sortProduct(option){
+//         await this.sortDropdown.selectOption({ label: option });
+//     }
+
+    
+//     async openProduct(){
+//         await this.productTitle.first().click();
+//     }
+
+   
+//     async addProductToCompare(){
+//         await this.compareBtn.first().click();
+//     }
+
+  
+//     async submitReview(title, review){
+//         await this.reviewTitle.fill(title);
+//         await this.reviewText.fill(review);
+//         await this.reviewSubmitBtn.click();
+//     }
+
+    
+//     async verifySuccessMessage(message){
+//         await expect(this.successBar).toContainText(message);
+//     }
+// }
+
+
+
+
 import { expect } from '@playwright/test';
 
 export class ProductPage {
@@ -215,58 +282,103 @@ export class ProductPage {
 
         this.page = page;
 
-        
-        this.searchBox = page.locator('#small-searchterms');
-        this.searchBtn = page.locator('button[type="submit"]');
+        // Search
+        this.searchBox =
+            page.locator('#small-searchterms');
 
-       
-        this.sortDropdown = page.locator('#products-orderby');
+        this.searchBtn =
+            page.locator('button[type="submit"]');
 
-        
-        this.productTitle = page.locator('.product-title');
+        // Sorting
+        this.sortDropdown =
+            page.locator('#products-orderby');
 
-      
-        this.compareBtn = page.locator('.add-to-compare-list-button');
+        // Product Locators
+        this.productTitle =
+    page.locator('.product-title a');
 
-       
-        this.reviewTitle = page.locator('#AddProductReview_Title');
-        this.reviewText = page.locator('#AddProductReview_ReviewText');
-        this.reviewSubmitBtn = page.locator('.write-review button');
+        this.productItems =
+    page.locator('.item-box');
 
-        
-        this.successBar = page.locator('.bar-notification.success');
+        this.productPrice =
+    page.locator('.product-price');
+
+  this.productImage =
+    page.locator('.gallery img').first();
+
+        this.noResult =
+    page.locator('.search-results');
+
+        // Compare
+        this.compareBtn =
+            page.locator('.add-to-compare-list-button');
+
+        // Review
+        this.reviewTitle =
+            page.locator('#AddProductReview_Title');
+
+        this.reviewText =
+            page.locator('#AddProductReview_ReviewText');
+
+        this.reviewSubmitBtn =
+            page.locator('.write-review button');
+
+        // Success Message
+        this.successBar =
+            page.locator('.bar-notification.success');
     }
 
-    
+    // Search Product
     async searchProduct(productName){
+
         await this.searchBox.fill(productName);
+
         await this.searchBtn.click();
     }
 
-   
+    // Sort Product
     async sortProduct(option){
-        await this.sortDropdown.selectOption({ label: option });
+
+        await this.sortDropdown.selectOption({
+            label: option
+        });
     }
 
-    
+    // Open First Product
+  async openFirstProduct(){
+
+    await this.productTitle.first()
+        .waitFor({ state: 'visible' });
+
+    await this.productTitle.first().click();
+}
+
+    // Open Product
     async openProduct(){
+
         await this.productTitle.first().click();
     }
 
-   
+    // Add Product To Compare
     async addProductToCompare(){
+
         await this.compareBtn.first().click();
     }
 
-  
+    // Submit Review
     async submitReview(title, review){
+
         await this.reviewTitle.fill(title);
+
         await this.reviewText.fill(review);
+
         await this.reviewSubmitBtn.click();
     }
 
-    
+    // Verify Success Message
     async verifySuccessMessage(message){
-        await expect(this.successBar).toContainText(message);
+
+        await expect(this.successBar)
+            .toContainText(message);
     }
 }
