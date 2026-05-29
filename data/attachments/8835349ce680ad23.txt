@@ -1,0 +1,2 @@
+URL: https://demo.nopcommerce.com/books
+Cart Qty: (0)
