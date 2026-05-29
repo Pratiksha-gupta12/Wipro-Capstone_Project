@@ -126,7 +126,7 @@ jobs:
       run: npx playwright install --with-deps
 
     - name: Run Playwright Tests
-      run: npx playwright test
+      run: npm run test:ci
 
     - name: Upload Allure Results
       uses: actions/upload-artifact@v4
@@ -160,6 +160,23 @@ jobs:
        pattern: allure-results-shard-*
        merge-multiple: true
        path: allure-results
+
+    - name: Get Allure History
+      uses: actions/checkout@v4
+      if: always()
+      with:
+        ref: gh-pages
+        path: gh-pages-dir
+      continue-on-error: true
+
+    - name: Copy History to Allure Results
+      if: always()
+      run: |
+        if [ -d gh-pages-dir/history ]; then
+          mkdir -p allure-results/history
+          cp -r gh-pages-dir/history/* allure-results/history/
+        fi
+      continue-on-error: true
  
     - name: Ensure Allure Results Directory
       run: mkdir -p allure-results

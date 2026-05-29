@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "allure:generate": "allure generate allure-results -o allure-report",
+    "clean": "rm -rf allure-results allure-report playwright-report",
+    "test:ci": "npm run clean && playwright test",
+    "allure:generate": "allure generate allure-results --clean -o allure-report",
     "deploy": "gh-pages -d allure-report"
   },
   "repository": {
