@@ -1,0 +1,61 @@
+import { test, expect } from '@playwright/test';
+
+test.describe('Users API Tests', () => {
+
+    test('TC_API_006 - Verify Get All Users',
+    async ({ request }) => {
+
+        const response = await request.get(
+            'https://fakestoreapi.com/users'
+        );
+
+        expect(response.status()).toBe(200);
+    });
+
+    test('TC_API_007 - Verify Get Single User',
+    async ({ request }) => {
+
+        const response = await request.get(
+            'https://fakestoreapi.com/users/1'
+        );
+
+        expect(response.status()).toBe(200);
+    });
+
+    test('TC_API_008 - Verify User Has Username',
+    async ({ request }) => {
+
+        const response = await request.get(
+            'https://fakestoreapi.com/users/1'
+        );
+
+        const data = await response.json();
+
+        expect(data.username).toBeTruthy();
+    });
+
+    test('TC_API_009 - Verify User Has Email',
+    async ({ request }) => {
+
+        const response = await request.get(
+            'https://fakestoreapi.com/users/1'
+        );
+
+        const data = await response.json();
+
+        expect(data.email).toContain('@');
+    });
+
+    test('TC_API_010 - Verify Users Count Greater Than Zero',
+    async ({ request }) => {
+
+        const response = await request.get(
+            'https://fakestoreapi.com/users'
+        );
+
+        const data = await response.json();
+
+        expect(data.length).toBeGreaterThan(0);
+    });
+
+});
