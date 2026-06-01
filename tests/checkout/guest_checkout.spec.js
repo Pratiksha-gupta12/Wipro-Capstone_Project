@@ -123,60 +123,104 @@
 
 
 
-import { test, expect } from '@playwright/test';
+// import { test, expect } from '@playwright/test';
+
+// test.describe('Guest Checkout Tests', () => {
+
+//     test.beforeEach(async ({ page }) => {
+
+//         await page.goto(
+//             'https://demo.nopcommerce.com/books'
+//         );
+
+//         await page.waitForLoadState(
+//             'domcontentloaded'
+//         );
+
+//         // Open cart directly
+//         await page.goto(
+//             'https://demo.nopcommerce.com/cart'
+//         );
+//     });
+
+//     test(
+//     'TC_CHECKOUT_005 - Verify Cart Page Opens',
+//     async ({ page }) => {
+
+//         await expect(page)
+//             .toHaveURL(/cart/);
+//     });
+
+//     test(
+//     'TC_CHECKOUT_006 - Verify Cart Page Body Visible',
+//     async ({ page }) => {
+
+//         await expect(
+//             page.locator('body')
+//         ).toBeVisible();
+//     });
+
+//     test(
+//     'TC_CHECKOUT_007 - Verify Current URL Contains Cart',
+//     async ({ page }) => {
+
+//         expect(
+//             page.url()
+//         ).toContain('cart');
+//     });
+
+//     test(
+//     'TC_CHECKOUT_008 - Verify HTML Page Loaded',
+//     async ({ page }) => {
+
+//         await expect(
+//             page.locator('html')
+//         ).toBeVisible();
+//     });
+
+// });
+
+
+
+const { test, expect } = require('@playwright/test');
+const { CheckoutPage } = require('../../pages/CheckoutPage');
 
 test.describe('Guest Checkout Tests', () => {
 
+    let checkoutPage;
+
     test.beforeEach(async ({ page }) => {
 
-        await page.goto(
-            'https://demo.nopcommerce.com/books'
-        );
+        checkoutPage = new CheckoutPage(page);
 
-        await page.waitForLoadState(
-            'domcontentloaded'
-        );
-
-        // Open cart directly
-        await page.goto(
-            'https://demo.nopcommerce.com/cart'
-        );
+        await checkoutPage.gotoBooksPage();
+        await checkoutPage.gotoCartPage();
     });
 
-    test(
-    'TC_CHECKOUT_005 - Verify Cart Page Opens',
-    async ({ page }) => {
+    test('TC_CHECKOUT_005 - Verify Cart Page Opens',
+    async () => {
 
-        await expect(page)
-            .toHaveURL(/cart/);
+        await checkoutPage.verifyCartUrl();
     });
 
-    test(
-    'TC_CHECKOUT_006 - Verify Cart Page Body Visible',
-    async ({ page }) => {
+    test('TC_CHECKOUT_006 - Verify Cart Page Body Visible',
+    async () => {
 
-        await expect(
-            page.locator('body')
-        ).toBeVisible();
+        await checkoutPage.verifyBodyVisible();
     });
 
-    test(
-    'TC_CHECKOUT_007 - Verify Current URL Contains Cart',
-    async ({ page }) => {
+    test('TC_CHECKOUT_007 - Verify Current URL Contains Cart',
+    async () => {
 
         expect(
-            page.url()
+            checkoutPage.getCurrentUrl()
         ).toContain('cart');
     });
 
-    test(
-    'TC_CHECKOUT_008 - Verify HTML Page Loaded',
-    async ({ page }) => {
+    test('TC_CHECKOUT_008 - Verify HTML Page Loaded',
+    async () => {
 
-        await expect(
-            page.locator('html')
-        ).toBeVisible();
+        await checkoutPage.verifyHtmlVisible();
     });
 
 });
-

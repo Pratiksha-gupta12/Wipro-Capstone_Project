@@ -115,64 +115,104 @@
 
 
 
-import { test, expect } from '@playwright/test';
+// import { test, expect } from '@playwright/test';
+
+// test.describe('Billing Address Tests', () => {
+
+//     test.beforeEach(async ({ page }) => {
+
+//         await page.goto(
+//             'https://demo.nopcommerce.com/register'
+//         );
+
+//         await page.waitForLoadState(
+//             'domcontentloaded'
+//         );
+//     });
+
+//     test(
+//     'TC_CHECKOUT_016 - Verify First Name Field Visible',
+//     async ({ page }) => {
+
+//         await expect(
+//             page.locator('#FirstName')
+//         ).toBeVisible();
+//     });
+
+//     test(
+//     'TC_CHECKOUT_017 - Verify Last Name Field Visible',
+//     async ({ page }) => {
+
+//         await expect(
+//             page.locator('#LastName')
+//         ).toBeVisible();
+//     });
+
+//     test(
+//     'TC_CHECKOUT_018 - Verify Email Field Visible',
+//     async ({ page }) => {
+
+//         await expect(
+//             page.locator('#Email')
+//         ).toBeVisible();
+//     });
+
+//     test(
+//     'TC_CHECKOUT_019 - Verify Password Field Visible',
+//     async ({ page }) => {
+
+//         await expect(
+//             page.locator('#Password')
+//         ).toBeVisible();
+//     });
+
+//     test(
+//     'TC_CHECKOUT_020 - Verify Confirm Password Field Visible',
+//     async ({ page }) => {
+
+//         await expect(
+//             page.locator('#ConfirmPassword')
+//         ).toBeVisible();
+//     });
+
+// });
+
+
+const { test } = require('@playwright/test');
+const { CheckoutPage } = require('../../pages/CheckoutPage');
 
 test.describe('Billing Address Tests', () => {
 
+    let checkoutPage;
+
     test.beforeEach(async ({ page }) => {
-
-        await page.goto(
-            'https://demo.nopcommerce.com/register'
-        );
-
-        await page.waitForLoadState(
-            'domcontentloaded'
-        );
+        checkoutPage = new CheckoutPage(page);
+        await checkoutPage.gotoRegisterPage();
     });
 
-    test(
-    'TC_CHECKOUT_016 - Verify First Name Field Visible',
-    async ({ page }) => {
-
-        await expect(
-            page.locator('#FirstName')
-        ).toBeVisible();
+    test('TC_CHECKOUT_016 - Verify First Name Field Visible',
+    async () => {
+        await checkoutPage.verifyFirstNameVisible();
     });
 
-    test(
-    'TC_CHECKOUT_017 - Verify Last Name Field Visible',
-    async ({ page }) => {
-
-        await expect(
-            page.locator('#LastName')
-        ).toBeVisible();
+    test('TC_CHECKOUT_017 - Verify Last Name Field Visible',
+    async () => {
+        await checkoutPage.verifyLastNameVisible();
     });
 
-    test(
-    'TC_CHECKOUT_018 - Verify Email Field Visible',
-    async ({ page }) => {
-
-        await expect(
-            page.locator('#Email')
-        ).toBeVisible();
+    test('TC_CHECKOUT_018 - Verify Email Field Visible',
+    async () => {
+        await checkoutPage.verifyEmailVisible();
     });
 
-    test(
-    'TC_CHECKOUT_019 - Verify Password Field Visible',
-    async ({ page }) => {
-
-        await expect(
-            page.locator('#Password')
-        ).toBeVisible();
+    test('TC_CHECKOUT_019 - Verify Password Field Visible',
+    async () => {
+        await checkoutPage.verifyPasswordVisible();
     });
 
-    test(
-    'TC_CHECKOUT_020 - Verify Confirm Password Field Visible',
-    async ({ page }) => {
-
-        await expect(
-            page.locator('#ConfirmPassword')
-        ).toBeVisible();
+    test('TC_CHECKOUT_020 - Verify Confirm Password Field Visible',
+    async () => {
+        await checkoutPage.verifyConfirmPasswordVisible();
     });
 
 });

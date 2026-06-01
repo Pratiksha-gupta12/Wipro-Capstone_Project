@@ -74,62 +74,123 @@
 
 
 
-import { test, expect } from '@playwright/test';
+// import { test, expect } from '@playwright/test';
+
+// test.describe('Shipping Method Tests', () => {
+
+//     test.beforeEach(async ({ page }) => {
+
+//         await page.goto(
+//             'https://demo.nopcommerce.com/cart'
+//         );
+
+//         await page.waitForLoadState(
+//             'domcontentloaded'
+//         );
+//     });
+
+//     test(
+//     'TC_SHIPPING_001 - Verify Cart Page URL',
+//     async ({ page }) => {
+
+//         await expect(page)
+//             .toHaveURL(/cart/);
+//     });
+
+//     test(
+//     'TC_SHIPPING_002 - Verify Page Title Contains nopCommerce',
+//     async ({ page }) => {
+
+//         await expect(page)
+//             .toHaveTitle(/nopCommerce/i);
+//     });
+
+//     test(
+//     'TC_SHIPPING_003 - Verify Page Body Visible',
+//     async ({ page }) => {
+
+//         await expect(
+//             page.locator('body')
+//         ).toBeVisible();
+//     });
+
+//     test(
+//     'TC_SHIPPING_004 - Verify Page Has Form Element',
+//     async ({ page }) => {
+
+//         await expect(
+//             page.locator('form').first()
+//         ).toBeVisible();
+//     });
+
+//     test(
+//     'TC_SHIPPING_005 - Verify Cart Page Loaded Successfully',
+//     async ({ page }) => {
+
+//         const url = page.url();
+
+//         expect(url).toContain('cart');
+//     });
+
+// });
+
+
+
+
+const { test, expect } = require('@playwright/test');
+const { CheckoutPage } = require('../../pages/CheckoutPage');
 
 test.describe('Shipping Method Tests', () => {
 
+    let checkoutPage;
+
     test.beforeEach(async ({ page }) => {
 
-        await page.goto(
-            'https://demo.nopcommerce.com/cart'
-        );
+        checkoutPage = new CheckoutPage(page);
 
-        await page.waitForLoadState(
-            'domcontentloaded'
-        );
+        await checkoutPage.gotoCartPage();
     });
 
     test(
-    'TC_SHIPPING_001 - Verify Cart Page URL',
-    async ({ page }) => {
+        'TC_SHIPPING_001 - Verify Cart Page URL',
+        async () => {
 
-        await expect(page)
-            .toHaveURL(/cart/);
-    });
-
-    test(
-    'TC_SHIPPING_002 - Verify Page Title Contains nopCommerce',
-    async ({ page }) => {
-
-        await expect(page)
-            .toHaveTitle(/nopCommerce/i);
-    });
+            await checkoutPage.verifyCartUrl();
+        }
+    );
 
     test(
-    'TC_SHIPPING_003 - Verify Page Body Visible',
-    async ({ page }) => {
+        'TC_SHIPPING_002 - Verify Page Title Contains nopCommerce',
+        async () => {
 
-        await expect(
-            page.locator('body')
-        ).toBeVisible();
-    });
-
-    test(
-    'TC_SHIPPING_004 - Verify Page Has Form Element',
-    async ({ page }) => {
-
-        await expect(
-            page.locator('form').first()
-        ).toBeVisible();
-    });
+            await checkoutPage.verifyPageTitle();
+        }
+    );
 
     test(
-    'TC_SHIPPING_005 - Verify Cart Page Loaded Successfully',
-    async ({ page }) => {
+        'TC_SHIPPING_003 - Verify Page Body Visible',
+        async () => {
 
-        const url = page.url();
+            await checkoutPage.verifyBodyVisible();
+        }
+    );
 
-        expect(url).toContain('cart');
-    });
+    test(
+        'TC_SHIPPING_004 - Verify Page Has Form Element',
+        async () => {
+
+            await checkoutPage.verifyFormVisible();
+        }
+    );
+
+    test(
+        'TC_SHIPPING_005 - Verify Cart Page Loaded Successfully',
+        async () => {
+
+            expect(
+                checkoutPage.getCurrentUrl()
+            ).toContain('cart');
+        }
+    );
 
 });
