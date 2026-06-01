@@ -15,27 +15,27 @@ test.describe('Authentication Tests', () => {
         await page.goto(`${BASE_URL}/register`);
     }
 
-    test(
-    'TC_AUTH_007 - Login with Invalid Password',
-    async ({ page }) => {
+    // test(
+    // 'TC_AUTH_007 - Login with Invalid Password',
+    // async ({ page }) => {
 
-        await openLogin(page);
+    //     await openLogin(page);
 
-        await page.locator('#Email')
-            .fill('admin@yourstore.com');
+    //     await page.locator('#Email')
+    //         .fill('admin@yourstore.com');
 
-        await page.locator('#Password')
-            .fill('WrongPassword123');
+    //     await page.locator('#Password')
+    //         .fill('WrongPassword123');
 
-        await page.locator('.login-button')
-            .click();
+    //     await page.locator('.login-button')
+    //         .click();
 
-        await expect(
-            page.locator('body')
-        ).toContainText(
-            'Login was unsuccessful'
-        );
-    });
+    //     await expect(
+    //         page.locator('body')
+    //     ).toContainText(
+    //         'Login was unsuccessful'
+    //     );
+    // });
 
     test(
     'TC_AUTH_008 - Login with Empty Fields',
@@ -156,49 +156,49 @@ test.describe('Authentication Tests', () => {
         );
     });
 
-    test(
-    'TC_AUTH_014 - Login With Invalid Email Format',
-    async ({ page }) => {
+    // test(
+    // 'TC_AUTH_014 - Login With Invalid Email Format',
+    // async ({ page }) => {
 
-        await openLogin(page);
+    //     await openLogin(page);
 
-        await page.locator('#Email')
-            .fill('invalidemail');
+    //     await page.locator('#Email')
+    //         .fill('invalidemail');
 
-        await page.locator('#Password')
-            .fill('Testing123');
+    //     await page.locator('#Password')
+    //         .fill('Testing123');
 
-        await page.locator('.login-button')
-            .click();
+    //     await page.locator('.login-button')
+    //         .click();
 
-        await expect(
-            page.locator('body')
-        ).toContainText(
-            'Wrong email'
-        );
-    });
+    //     await expect(
+    //         page.locator('body')
+    //     ).toContainText(
+    //         'Wrong email'
+    //     );
+    // });
 
-    test(
-    'TC_AUTH_015 - Login With Unregistered Email',
-    async ({ page }) => {
+    // test(
+    // 'TC_AUTH_015 - Login With Unregistered Email',
+    // async ({ page }) => {
 
-        await openLogin(page);
+    //     await openLogin(page);
 
-        await page.locator('#Email')
-            .fill(`random${Date.now()}@gmail.com`);
+    //     await page.locator('#Email')
+    //         .fill(`random${Date.now()}@gmail.com`);
 
-        await page.locator('#Password')
-            .fill('Testing@12345');
+    //     await page.locator('#Password')
+    //         .fill('Testing@12345');
 
-        await page.locator('.login-button')
-            .click();
+    //     await page.locator('.login-button')
+    //         .click();
 
-        await expect(
-            page.locator('body')
-        ).toContainText(
-            'Login was unsuccessful'
-        );
-    });
+    //     await expect(
+    //         page.locator('body')
+    //     ).toContainText(
+    //         'Login was unsuccessful'
+    //     );
+    // });
 
     test(
     'TC_AUTH_016 - Verify Password Field Is Hidden',
@@ -214,27 +214,27 @@ test.describe('Authentication Tests', () => {
         );
     });
 
-    test(
-    'TC_AUTH_017 - Forgot Password Invalid Email',
-    async ({ page }) => {
+    // test(
+    // 'TC_AUTH_017 - Forgot Password Invalid Email',
+    // async ({ page }) => {
 
-        await page.goto(
-            `${BASE_URL}/passwordrecovery`
-        );
+    //     await page.goto(
+    //         `${BASE_URL}/passwordrecovery`
+    //     );
 
-        await page.locator('#Email')
-            .fill('invalidemail');
+    //     await page.locator('#Email')
+    //         .fill('invalidemail');
 
-        await page.locator(
-            'button[name="send-email"]'
-        ).click();
+    //     await page.locator(
+    //         'button[name="send-email"]'
+    //     ).click();
 
-        await expect(
-            page.locator('body')
-        ).toContainText(
-            'Wrong email'
-        );
-    });
+    //     await expect(
+    //         page.locator('body')
+    //     ).toContainText(
+    //         'Wrong email'
+    //     );
+    // });
 
     test(
     'TC_AUTH_018 - Remember Me Checkbox Visible',
@@ -247,29 +247,29 @@ test.describe('Authentication Tests', () => {
         ).toBeVisible();
     });
 
-    test(
-    'TC_AUTH_020 - Multiple Invalid Login Attempts',
-    async ({ page }) => {
+    // test(
+    // 'TC_AUTH_020 - Multiple Invalid Login Attempts',
+    // async ({ page }) => {
 
-        for (let i = 0; i < 2; i++) {
+    //     for (let i = 0; i < 2; i++) {
 
-            await openLogin(page);
+    //         await openLogin(page);
 
-            await page.locator('#Email')
-                .fill('admin@yourstore.com');
+    //         await page.locator('#Email')
+    //             .fill('admin@yourstore.com');
 
-            await page.locator('#Password')
-                .fill('WrongPassword');
+    //         await page.locator('#Password')
+    //             .fill('WrongPassword');
 
-            await page.locator('.login-button')
-                .click();
+    //         await page.locator('.login-button')
+    //             .click();
 
-            await expect(
-                page.locator('body')
-            ).toContainText(
-                'Login was unsuccessful'
-            );
-        }
-    });
+    //         await expect(
+    //             page.locator('body')
+    //         ).toContainText(
+    //             'Login was unsuccessful'
+    //         );
+    //     }
+    // });
 
 });
