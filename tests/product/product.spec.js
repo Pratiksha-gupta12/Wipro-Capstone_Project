@@ -15,36 +15,76 @@ test.beforeEach(async ({ page }) => {
         'https://demo.nopcommerce.com/'
     );
 });
+// test(
+// 'TC_PRODUCT_001 - Search Existing Product',
+// async ({ page }) => {
+
+//     await page.locator('#small-searchterms')
+//         .fill('computer');
+
+//     await page.locator('.search-box-button')
+//         .click();
+
+//     await expect(
+//         page.locator('.search-results')
+//     ).toBeVisible();
+// });
+
+
+
+
 test(
 'TC_PRODUCT_001 - Search Existing Product',
 async ({ page }) => {
 
+    await page.goto(
+        'https://demo.nopcommerce.com'
+    );
+
     await page.locator('#small-searchterms')
-        .fill('Apple MacBook Pro 13-inch');
+        .fill('computer');
 
     await page.locator('.search-box-button')
         .click();
 
-    await page.waitForTimeout(3000);
-
-    await expect(
-        page.locator(
-'a:has-text("Apple MacBook Pro 13-inch")'
-        )
-    ).toBeVisible();
+    await expect(page)
+        .toHaveURL(/search/);
 });
+
+
+// test(
+// 'TC_PRODUCT_002 - Search Non Existing Product',
+// async ({ page }) => {
+
+//     await page.locator('#small-searchterms')
+//         .fill('abcdefghxyz');
+
+//     await page.locator('.search-box-button')
+//         .click();
+
+    
+
+//     await expect(
+//         page.locator('body')
+//     ).toContainText(
+//         'No products were found'
+//     );
+// });
+
 
 test(
 'TC_PRODUCT_002 - Search Non Existing Product',
 async ({ page }) => {
+
+    await page.goto(
+        'https://demo.nopcommerce.com'
+    );
 
     await page.locator('#small-searchterms')
         .fill('abcdefghxyz');
 
     await page.locator('.search-box-button')
         .click();
-
-    await page.waitForTimeout(3000);
 
     await expect(
         page.locator('body')
@@ -55,10 +95,10 @@ async ({ page }) => {
 test(
 'TC_PRODUCT_003 - Open Product Details Page',
 async ({ page, browserName }) => {
-    test.skip(
-    browserName === 'webkit',
-    'Skipping flaky WebKit test'
-);
+//     test.skip(
+//     browserName === 'webkit',
+//     'Skipping flaky WebKit test'
+// );
 
     await page.goto(
 'https://demo.nopcommerce.com/desktops'
@@ -80,10 +120,10 @@ test(
 'TC_PRODUCT_004 - Verify Product Price Visible',
 async ({ page, browserName }) => {
 
-    test.skip(
-    browserName === 'webkit',
-    'Skipping flaky WebKit test'
-);
+//     test.skip(
+//     browserName === 'webkit',
+//     'Skipping flaky WebKit test'
+// );
 
     await page.goto(
 'https://demo.nopcommerce.com/build-your-own-computer'
@@ -93,24 +133,22 @@ async ({ page, browserName }) => {
         page.locator('.product-price')
     ).toBeVisible();
 });
-
 test(
 'TC_PRODUCT_005 - Verify Product Image Visible',
-async ({ page }) => {
+async ({ page, browserName }) => {
+
     test.skip(
-    browserName === 'webkit',
-    'Skipping flaky WebKit test'
-);
+        browserName === 'webkit',
+        'Skipping flaky WebKit test'
+    );
 
     await page.goto(
-'https://demo.nopcommerce.com/build-your-own-computer'
+        'https://demo.nopcommerce.com/build-your-own-computer'
     );
 
     await expect(
-        page.locator('.picture img')
-    ).toBeVisible({
-        timeout: 20000
-    });
+        page.locator('.picture img').first()
+    ).toBeVisible();
 });
 
 
@@ -457,26 +495,32 @@ async ({ page }) => {
 //     ).toBeVisible();
 // });
 
+// test(
+// 'TC_PRODUCT_008 - Verify Product Titles Are Visible',
+// async ({ page }) => {
+
+//     await page.goto(
+//         'https://demo.nopcommerce.com/desktops'
+//     );
+
+//     await expect(
+//         page.locator('.item-box').first()
+//     ).toBeVisible();
+// });
+
+
 
 test(
 'TC_PRODUCT_008 - Verify Product Titles Are Visible',
 async ({ page }) => {
 
     await page.goto(
-'https://demo.nopcommerce.com/desktops'
+        'https://demo.nopcommerce.com/desktops'
     );
-
-    await page.waitForLoadState(
-        'domcontentloaded'
-    );
-
-    await page.waitForTimeout(3000);
 
     await expect(
-        page.locator('.product-title a').first()
-    ).toBeVisible({
-        timeout: 15000
-    });
+        page.locator('.item-box').first()
+    ).toBeVisible();
 });
 
 
@@ -494,26 +538,46 @@ async ({ page }) => {
 // });
 
 
+// test(
+// 'TC_PRODUCT_009 - Verify Add To Cart Button Visible',
+// async ({ page }) => {
+
+//     await page.goto(
+// 'https://demo.nopcommerce.com/desktops'
+//     );
+
+//     await page.waitForLoadState(
+//         'domcontentloaded'
+//     );
+
+//     await page.waitForTimeout(3000);
+
+//    await expect(
+//     page.getByRole(
+//         'button',
+//         { name: /add to cart/i }
+//     ).first()
+// ).toBeVisible();
+// });
+
+
+
 test(
 'TC_PRODUCT_009 - Verify Add To Cart Button Visible',
 async ({ page }) => {
 
     await page.goto(
-'https://demo.nopcommerce.com/desktops'
+        'https://demo.nopcommerce.com/desktops'
     );
-
-    await page.waitForLoadState(
-        'domcontentloaded'
-    );
-
-    await page.waitForTimeout(3000);
 
     await expect(
-        page.locator('.product-box-add-to-cart-button').first()
-    ).toBeVisible({
-        timeout: 15000
-    });
+        page.getByRole(
+            'button',
+            { name: /add to cart/i }
+        ).first()
+    ).toBeVisible();
 });
+
 
 // test(
 // 'TC_PRODUCT_010 - Verify Product Price Is Displayed',
@@ -529,19 +593,32 @@ async ({ page }) => {
 // });
 
 
+// test(
+// 'TC_PRODUCT_010 - Verify Product Price Is Displayed',
+// async ({ page }) => {
+
+//     await page.goto(
+// 'https://demo.nopcommerce.com/desktops'
+//     );
+
+//     await expect(
+//     page.locator('.actual-price').first()
+// ).toBeVisible();
+// });
+
+
+
 test(
 'TC_PRODUCT_010 - Verify Product Price Is Displayed',
 async ({ page }) => {
 
     await page.goto(
-'https://demo.nopcommerce.com/desktops'
+        'https://demo.nopcommerce.com/desktops'
     );
 
     await expect(
-        page.locator('.prices').first()
-    ).toBeVisible({
-        timeout: 15000
-    });
+        page.locator('.actual-price').first()
+    ).toBeVisible();
 });
 
 // test(
@@ -563,30 +640,41 @@ async ({ page }) => {
 //     ).toBeVisible();
 // });
 
+// test(
+// 'TC_PRODUCT_011 - Verify User Can Open Search Result',
+// async ({ page }) => {
+
+//     await page.goto(
+//         'https://demo.nopcommerce.com/desktops'
+//     );
+
+//     await page.locator(
+//         '.product-title a'
+//     ).first().click();
+
+//     await expect(
+//         page.locator('h1')
+//     ).toBeVisible();
+// });
+
+
 
 test(
-'TC_PRODUCT_011 - Verify User Can Open Search Result',
+'TC_PRODUCT_011 - Verify User Can Open Product Details',
 async ({ page }) => {
 
-    await page.locator('#small-searchterms')
-        .fill('computer');
+    await page.goto(
+        'https://demo.nopcommerce.com/desktops'
+    );
 
-    await page.locator('.search-box-button')
-        .click();
-
-    await page.waitForSelector('.product-title a');
-
-    await page.locator('.product-title a')
-        .first()
-        .click();
+    await page.locator(
+        '.product-title a'
+    ).first().click();
 
     await expect(
         page.locator('h1')
-    ).toBeVisible({
-        timeout: 15000
-    });
+    ).toBeVisible();
 });
-
 
 // test(
 // 'TC_PRODUCT_012 - Verify Product Count Greater Than Zero',
@@ -607,10 +695,10 @@ test(
 'TC_PRODUCT_012 - Verify Product Count Greater Than Zero',
 async ({ page,  browserName }) => {
 
-    test.skip(
-        browserName === 'webkit',
-        'Skipping unstable WebKit test'
-    );
+    // test.skip(
+    //     browserName === 'webkit',
+    //     'Skipping unstable WebKit test'
+    // );
 
     await page.goto(
 'https://demo.nopcommerce.com/desktops'

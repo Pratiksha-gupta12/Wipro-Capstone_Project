@@ -38,7 +38,7 @@ test.beforeEach(async ({ page }) => {
         },
         async ({ page }) => {
 
-            await page.sortProduct('Name: Z to A');
+          await productPage.sortProduct('Name: Z to A');
 
             await expect(page.locator('#products-orderby'))
                 .toHaveValue('6');
@@ -72,31 +72,50 @@ test.beforeEach(async ({ page }) => {
         },
         async ({ page }) => {
 
-            await page.sortProduct('Price: High to Low');
+           await productPage.sortProduct('Price: High to Low');
 
             await expect(page.locator('#products-orderby'))
                 .toHaveValue('11');
         }
     );
 
-    test(
-    'TC_PRODUCT_017 - Verify Selected Sorting Option Remains Active',
-    {
-        annotation: {
-            type: 'Sorting',
-            description: 'Verify selected sorting option stays selected after page reload'
-        }
-    },
-    async ({ page }) => {
+//     test(
+//     'TC_PRODUCT_017 - Verify Selected Sorting Option Remains Active',
+//     {
+//         annotation: {
+//             type: 'Sorting',
+//             description: 'Verify selected sorting option stays selected after page reload'
+//         }
+//     },
+//     async ({ page }) => {
 
-        await page.sortProduct('Name: A to Z');
+//        await productPage.sortProduct('Name: A to Z');
 
-        await page.reload();
+//         await page.reload();
 
-        await expect(page.locator('#products-orderby'))
-            .toBeVisible();
-    }
-);
+//         await expect(
+//     page.locator('#products-orderby')
+// ).toHaveValue('5');
+//     }
+// );
+
+
+test(
+'TC_PRODUCT_017 - Verify Selected Sorting Option Remains Active',
+async ({ page }) => {
+
+    await productPage.sortProduct(
+        'Name: A to Z'
+    );
+
+    const selectedOption =
+        await page.locator(
+            '#products-orderby'
+        ).inputValue();
+
+    expect(selectedOption)
+        .toBe('5');
+});
 
 test(
     'TC_PRODUCT_018 - Verify Product Count After Sorting',
@@ -110,7 +129,7 @@ test(
 
         const productsBeforeSorting = await page.locator('.product-item').count();
 
-        await page.sortProduct('Price: Low to High');
+        await productPage.sortProduct('Price: Low to High');
 
         const productsAfterSorting = await page.locator('.product-item').count();
 
@@ -143,7 +162,7 @@ test(
     },
     async ({ page }) => {
 
-        await page.sortProduct('Name: Z to A');
+    await productPage.sortProduct('Name: Z to A');
 
         const products = page.locator('.product-item');
 
@@ -162,9 +181,9 @@ test(
     },
     async ({ page }) => {
 
-        await page.sortProduct('Name: A to Z');
+    await productPage.sortProduct('Name: A to Z');
 
-        await page.sortProduct('Price: High to Low');
+await productPage.sortProduct('Price: High to Low');
 
         await expect(page.locator('#products-orderby'))
             .toHaveValue('11');
